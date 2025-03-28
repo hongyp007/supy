@@ -1,12 +1,16 @@
+
+#%%
 from astropy.coordinates import EarthLocation, get_sun, get_moon
 from datetime import datetime
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
 from astroplan import Observer
-import astropy.units as u
+from typing import Union, Optional, List
+from astropy import units as u
 import pytz
 import inspect
-
+import numpy as np
+#%%
 class mainObserver:
     """
     Class for observing astronomical objects and events from a specific location on Earth.
@@ -59,23 +63,23 @@ class mainObserver:
     """
     
     def __init__(self,
-                 OBSERVER_LONGITUDE : str = -70.7804,
-                 OBSERVER_LATITUDE : str = -30.4704,
-                 OBSERVER_ELEVATION : str = 1580,
-                 OBSERVER_TIMEZONE : str = "America/Santiago",
-                 OBSERVER_NAME : str = "Hyeonho Choi",
-                 OBSERVER_OBSERVATORY : str = "7DT"
-                 ):
+                OBSERVER_LONGITUDE: Union[str, float, int] = -70.7804,
+                OBSERVER_LATITUDE: Union[str, float, int] = -30.4704,
+                OBSERVER_ELEVATION: Union[str, float, int] = 1580,
+                OBSERVER_TIMEZONE: str = "America/Santiago",
+                OBSERVER_NAME: str = "Hyeonho Choi",
+                OBSERVER_OBSERVATORY: str = "7DT"
+                ):
         
-    
-        self._latitude = float(OBSERVER_LATITUDE)*u.deg
-        self._longitude = float(OBSERVER_LONGITUDE)*u.deg
-        self._elevation = float(OBSERVER_ELEVATION)*u.m
+        # Convert to float in case strings were provided
+        self._latitude = float(OBSERVER_LATITUDE) * u.deg
+        self._longitude = float(OBSERVER_LONGITUDE) * u.deg
+        self._elevation = float(OBSERVER_ELEVATION) * u.m
         self._name = OBSERVER_NAME
-        self._observatory= OBSERVER_OBSERVATORY
+        self._observatory = OBSERVER_OBSERVATORY
         self._timezone = pytz.timezone(OBSERVER_TIMEZONE)
         self._earthlocation = EarthLocation.from_geodetic(lat=self._latitude, lon=self._longitude, height=self._elevation)
-        self._observer = Observer(location = self._earthlocation, name = self._observatory, timezone = self._timezone)
+        self._observer = Observer(location=self._earthlocation, name=self._observatory, timezone=self._timezone)
         self.status = self.get_status()
         self.condition = 'idle'
     ############ Site info ############
@@ -120,7 +124,7 @@ class mainObserver:
         
     ############ Time ############
     def localtime(self, 
-                  utctimes : datetime or np.array = None):
+                  utctimes : Optional[Union[datetime, np.ndarray]] = None):
         """
         Returns the datetime object representing the corresponding local time in the timezone 
         specified by the object's `_timezone` attribute.
@@ -156,7 +160,7 @@ class mainObserver:
         return Time.now()
     
     def is_night(self,
-                 utctimes : datetime or Time or np.array = None):
+                 utctimes : Optional[Union[datetime, Time, np.ndarray]] = None):
         """
         Check if it is night at a given UTC time and location.
         
@@ -178,7 +182,7 @@ class mainObserver:
         return self._observer.is_night(utctimes, horizon = -18*u.deg)
     
     def tonight(self,
-                time : datetime or Time or np.array = None,
+                time : Optional[Union[datetime, Time, np.ndarray]] = None,
                 horizon = -18):
         """
         Get the start and end times of tonight at a given UTC time and location.
@@ -206,9 +210,9 @@ class mainObserver:
     ############ Target ############
     
     def to_altaz(self,
-                 ra : float or str or list,
-                 dec : float or str or list,
-                 utctime : datetime or Time = None):
+                 ra : Union[float, str, list],
+                 dec : Union[float, str, list],
+                 utctime : Optional[Union[datetime, Time]] = None):
         """
         Parameters
         ==========
@@ -229,7 +233,7 @@ class mainObserver:
     def to_radec(self,
                  alt : float,
                  az : float,
-                 utctime : datetime or Time = None):
+                 utctime : Optional[Union[datetime, Time]] = None):
         """
         Parameters
         ==========
@@ -248,9 +252,9 @@ class mainObserver:
         return coord.icrs
     
     def risetime(self,
-                 ra : float or str or list,
-                 dec : float or str or list,
-                 utctime : datetime or Time = None,
+                 ra : Union[float, str, list],
+                 dec : Union[float, str, list],
+                 utctime : Optional[Union[datetime, Time]] = None,
                  mode : str = 'next',
                  horizon : float = 30):
         """
@@ -275,9 +279,9 @@ class mainObserver:
         return rise_time
     
     def settime(self,
-                ra : float or str or list,
-                dec : float or str or list,
-                utctime : datetime or Time = None,
+                ra : Union[float, str, list],
+                dec : Union[float, str, list],
+                utctime : Optional[Union[datetime, Time]] = None,
                 mode : str = 'nearest',
                 horizon : float = 30):
         """
@@ -303,7 +307,7 @@ class mainObserver:
 
     ############ Sun ############
     def sun_radec(self,
-                  utctimes : datetime or Time or np.array = None):
+                  utctimes : Optional[Union[datetime, Time, np.ndarray]] = None):
         """
         Get the RA and Dec of the Sun at a given UTC time.
 
@@ -325,7 +329,7 @@ class mainObserver:
         return get_sun(utctimes)
     
     def sun_altaz(self,
-                  utctimes : datetime or Time or np.array = None):
+                  utctimes : Optional[Union[datetime, Time, np.ndarray]] = None):
         """
         Calculates the altitude and azimuth of the Sun at the given time and location.
 
@@ -347,7 +351,7 @@ class mainObserver:
         return self._observer.sun_altaz(utctimes)
     
     def sun_risetime(self,
-                     utctimes : datetime or Time or np.array = None,
+                     utctimes : Optional[Union[datetime, Time, np.ndarray]] = None,
                      mode = 'nearest',
                      horizon = -18):
         """
@@ -375,11 +379,11 @@ class mainObserver:
         return self._observer.sun_rise_time(utctimes, which = mode, horizon = horizon * u.deg)
     
     def sun_settime(self,
-                    utctimes : datetime or Time or np.array = None,
+                    utctimes : Optional[Union[datetime, Time, np.ndarray]] = None,
                     mode = 'nearest',
                     horizon = -18):
         """
-        Calculates the next rise time of the Sun at the given time and location.
+        Calculates the next set time of the Sun at the given time and location.
 
         Parameters
         ==========
@@ -404,7 +408,7 @@ class mainObserver:
     
     ############ Moon ############
     def moon_radec(self,
-                   utctimes : datetime or Time or np.array = None):
+                   utctimes : Optional[Union[datetime, Time, np.ndarray]] = None):
         """
         Calculates the RA and Dec of the Moon at the given time and location.
         
@@ -426,7 +430,7 @@ class mainObserver:
         return get_moon(utctimes)
     
     def moon_altaz(self,
-                   utctimes : datetime or Time or np.array = None):
+                   utctimes : Optional[Union[datetime, Time, np.array]] = None):
         """
         Calculates the altitude and azimuth of the Moon at the given time and location.
 
@@ -449,7 +453,7 @@ class mainObserver:
         return self._observer.moon_altaz(utctimes) #self._moon_altaz(radec = get_moon(time), time = time)
 
     def moon_risetime(self,
-                      utctimes : datetime or Time or np.array = None,
+                      utctimes : Optional[Union[datetime, Time, np.array]] = None,
                       mode = 'nearest',
                       horizon = -18):
         """
@@ -477,7 +481,7 @@ class mainObserver:
         return self._observer.moon_rise_time(utctimes, which = mode, horizon = horizon * u.deg)
     
     def moon_settime(self,
-                     utctimes : datetime or Time or np.array = None,
+                     utctimes : Optional[Union[datetime, Time, np.array]] = None,
                      mode = 'nearest',
                      horizon = -18):
         """
@@ -505,7 +509,7 @@ class mainObserver:
         return self._observer.moon_set_time(utctimes, which = mode, horizon = horizon * u.deg)
     
     def moon_phase(self,
-                   utctimes : datetime or Time or np.array = None):
+                   utctimes : Optional[Union[datetime, Time, np.array]] = None):
         """
         Calculates the phase of the Moon at the given time and location.
         
@@ -527,8 +531,8 @@ class mainObserver:
         return self._observer.moon_illumination(utctimes)
     
     def _get_skycoord(self,
-                     ra : str or float,
-                     dec: str or float):
+                     ra : Union[str,float],
+                     dec: Union[str,float]):
         """
         Parameters
         ==========
@@ -551,3 +555,9 @@ class mainObserver:
             raise ValueError("Unsupported RA and Dec format")
         return coord
     
+    
+# %%
+if __name__ == '__main__':
+    import astropy.units as u
+    obs = mainObserver()
+# %%
