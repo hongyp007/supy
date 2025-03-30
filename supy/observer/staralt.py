@@ -616,11 +616,11 @@ class Staralt:
 
         # Optimize the plotting section by preparing data structures first
         # Plotting - Create figure just once
-        fig = plt.figure(dpi=300, figsize=(10, 4))
-        plt.title(titlename, loc='center', y=1.05)
+        fig = plt.figure(dpi=300, figsize=(10, 5))
+        plt.title(titlename, loc='center')
         
         # Add subtitle with observation criteria
-        plt.figtext(0.515, 0.90, f"Criteria: Alt > {target_minalt}°, Moon sep > {target_minmoonsep}°", 
+        plt.figtext(0.515, 0.905, f"Criteria: Alt > {target_minalt}°, Moon sep > {target_minmoonsep}°", 
                     ha='center', va='center', fontsize=9, style='italic')
 
         # Ensure all arrays have matching lengths - do this once before plotting
@@ -772,7 +772,7 @@ class Staralt:
         plt.xlabel('UTC Time [mm-dd hh]')
         plt.ylabel('Altitude [degrees]')
         plt.grid()
-        plt.xticks(rotation=45)
+        # plt.xticks(rotation=45)
         
         # Add bottom margin
         plt.subplots_adjust(bottom=0.18)
