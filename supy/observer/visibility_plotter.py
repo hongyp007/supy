@@ -94,7 +94,7 @@ class VisibilityPlotter:
         
         try:
             # Extract relevant information from staralt_data_dict
-            now_datetime = staralt_data_dict.get("now_datetime").datetime
+            now_datetime = staralt_data_dict.get("now_datetime")
             color_target = staralt_data_dict.get("color_target", [])
             target_times = staralt_data_dict.get("target_times", [])
             target_alts = staralt_data_dict.get("target_alts", [])
