@@ -319,7 +319,7 @@ class Staralt():
         # Create the data dictionary - use the cached now value
         data_dict: Dict[str, Any] = {
             "objname": self.objname,
-            "now_datetime": utctime,  # Use cached value
+            "now_datetime": utctime.datetime,  
             "time_range_start": time_range_start.datetime,
             "time_range_end": time_range_end.datetime,
             "target_times": target_times,
