@@ -1,207 +1,24 @@
-from mainobserver import mainObserver
 from datetime import datetime as dt, timedelta
 from astropy.time import Time
 from astropy.coordinates import SkyCoord, AltAz
 from astropy import units as u
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import Union, Optional, List, Dict, Any, Tuple
+
+from typing import Union, Dict, Any, Optional, Tuple
+
 from matplotlib.dates import date2num, DateFormatter
 from datetime import datetime
 
+from .mainobserver import mainObserver
+from .params import obsNightParams, staraltParams
+from . import bumper
 
-# Define a custom class for observation night outside of methods
-class ObsNight:
-    """Class to store observation night information."""
-    
-    def __init__(self):
-        # Initialize attributes that will be set later
-        self.sunrise_civil: Optional[Time] = None
-        self.sunset_civil: Optional[Time] = None
-        self.sunrise_nautical: Optional[Time] = None
-        self.sunset_nautical: Optional[Time] = None
-        self.sunrise_astro: Optional[Time] = None
-        self.sunset_astro: Optional[Time] = None
-        self.sunrise_night: Optional[Time] = None
-        self.sunset_night: Optional[Time] = None
-
-    def __getattr__(self, name: str) -> None:
-        return None
-
-    def __repr__(self) -> str:
-        attrs = {name: value.iso if isinstance(value, Time) else value
-                 for name, value in self.__dict__.items()}
-        max_key_len = max(len(key) for key in attrs.keys()) if attrs else 0
-        attrs_str = '\n'.join([f'{key:{max_key_len}}: {value}' for key, value in attrs.items()])
-        return f'{self.__class__.__name__} Attributes:\n{attrs_str}'
-
-
-# Helper functions for data processing
-def _safe_to_list(value) -> List[float]:
-    """Convert a value to a list of floats safely."""
-    if value is None:
-        return []
-    # Optimize: Use NumPy's vectorized operations if input is NumPy array
-    if hasattr(value, 'shape') and hasattr(value, 'astype'):
-        # Fast path for NumPy arrays
-        try:
-            # Replace NaN values with 0.0 and convert to Python list
-            return np.nan_to_num(value).astype(float).tolist()
-        except (TypeError, ValueError):
-            pass  # Fall back to regular path if NumPy conversion fails
-            
-    if hasattr(value, '__iter__') and not isinstance(value, str):
-        return [float(v) if v is not None else 0.0 for v in value]
-    return [float(value) if value is not None else 0.0]
-
-def _safe_get(data_dict: Dict[str, Any], key: str, default: Any = None) -> Any:
-    """Safely get a value from a dictionary with a default fallback."""
-    return data_dict.get(key, default)
-
-def _safe_get_datetime(time_obj) -> Optional[dt]:
-    """Safely extract datetime from a Time object."""
-    if time_obj is not None and hasattr(time_obj, 'datetime'):
-        return time_obj.datetime
-    return None
-
-def _safe_date2num(dt_obj: Any) -> Optional[float]:
-    """
-    Safely convert datetime to numeric value for plotting.
-    Handles the case where date2num returns a numpy array instead of a float.
-    """
-    if dt_obj is None:
-        return None
-    try:
-        result = date2num(dt_obj)
-        # Handle case where result is a numpy array
-        if hasattr(result, 'item'):
-            return float(result.item())
-        # Handle case where result is already a scalar
-        return float(result)
-    except (TypeError, ValueError) as e:
-        print(f"Warning: Error converting datetime to numeric: {e}")
-        return None
-
-def _safe_get_attribute(obj, attr_path):
-    """
-    Extract a nested attribute safely.
-    attr_path is a list like ['alt', 'value'] for obj.alt.value
-    """
-    if obj is None:
-        return None
-        
-    current = obj
-    for attr in attr_path:
-        if not hasattr(current, attr):
-            return None
-        current = getattr(current, attr)
-        if current is None:
-            return None
-    
-    return current
-
-def _safe_get_alt_value(altaz_obj):
-    """Extract altitude value from AltAz object safely."""
-    return _safe_get_attribute(altaz_obj, ['alt', 'value'])
-
-def _safe_get_separation_value(sep_obj):
-    """Extract separation value safely."""
-    return _safe_get_attribute(sep_obj, ['value'])
-
-def _extract_time_values(altaz_obj, attr_name='obstime'):
-    """Directly extract time values for comparison."""
-    if altaz_obj is None or not hasattr(altaz_obj, attr_name):
-        return []
-        
-    attr_val = getattr(altaz_obj, attr_name)
-    if attr_val is None:
-        return []
-        
-    # If it's a scalar, return as single item
-    if hasattr(attr_val, 'size') and attr_val.size == 1:
-        return [attr_val]
-        
-    # Try to iterate if it's a collection
-    try:
-        # For arrays with shape attribute
-        if hasattr(attr_val, 'shape'):
-            return [t for t in attr_val]
-        # For regular iterables
-        return [t for t in attr_val]
-    except TypeError:
-        # If iteration fails, treat as a scalar
-        return [attr_val]
-
-def _extract_times_safely(altaz_obj, attr_name='obstime'):
-    """
-    Directly extract time values from possibly non-iterable TimeAttribute.
-    Optimized version with caching for better performance.
-    """
-    result = []
-    
-    # Check if the object is valid
-    if altaz_obj is None or not hasattr(altaz_obj, attr_name):
-        return result
-        
-    attr_val = getattr(altaz_obj, attr_name)
-    if attr_val is None:
-        return result
-    
-    # Use an optimized approach for large arrays
-    if hasattr(attr_val, 'size') and hasattr(attr_val.size, '__gt__') and attr_val.size > 100:
-        # For large arrays, process in chunks for better memory performance
-        chunk_size = 100
-        # Initialize with the right size to avoid resizing
-        result = [None] * attr_val.size
-        
-        for i in range(0, attr_val.size, chunk_size):
-            end = min(i + chunk_size, attr_val.size)
-            # Process this chunk
-            for j in range(i, end):
-                try:
-                    result[j] = _safe_isoformat(attr_val[j])
-                except (IndexError, TypeError):
-                    result[j] = ""
-        return result
-        
-    # If it's a scalar Time object, handle it directly
-    if hasattr(attr_val, 'size') and attr_val.size == 1:
-        return [_safe_isoformat(attr_val)]
-        
-    # If it seems to be an array or collection, try to iterate
-    try:
-        # For Time arrays with shape attribute - use a list comprehension
-        if hasattr(attr_val, 'shape'):
-            return [_safe_isoformat(t) for t in attr_val]
-        # For regular iterables
-        return [_safe_isoformat(t) for t in attr_val]
-    except TypeError as e:
-        # If iteration fails, treat as a scalar
-        print(f"Warning: Non-iterable TimeAttribute handled as scalar: {e}")
-        return [_safe_isoformat(attr_val)]
-
-def _safe_isoformat(time_obj):
-    """Safely extract ISO format from a Time or TimeAttribute object."""
-    if time_obj is None:
-        return ""
-    if hasattr(time_obj, 'datetime'):
-        if time_obj.datetime is None:
-            return ""
-        return time_obj.datetime.isoformat()
-    if hasattr(time_obj, 'iso'):
-        return time_obj.iso
-    # Try direct conversion as last resort
-    try:
-        return str(time_obj)
-    except:
-        return ""
-
-
-class Staralt:
+class Staralt():
     """Class to handle star altitude plots."""
     
     def __init__(self, 
-                 observer: mainObserver,
+                 observer: Optional[mainObserver] = None,
                  utctime: Optional[Union[dt, Time]] = None):
         """
         Initialize a Staralt object.
@@ -214,26 +31,102 @@ class Staralt:
             Initial time for calculations. Default is current time.
         """
         # Set the observer
+        if observer is None:
+            observer = mainObserver()
+
         self._observer = observer
         
         # If no time is provided, use the current time
         if utctime is None:
-            utctime = Time.now()
+            utctime = self._observer.now()
         if not isinstance(utctime, Time):
             utctime = Time(utctime)
+
+        self._set_night(utctime)
             
-        # Set the night
-        self.tonight = self._set_night(utctime=utctime)
-        
-        # Initialize data dictionary to store results
-        self.data_dict: Dict[str, Any] = {}
+    @property
+    def utctime(self) -> Time:
+        return self._observer.now()
     
     @property
     def observer(self) -> mainObserver:
         """Get the observer object."""
         return self._observer
     
-    def _set_night(self, utctime: Optional[Union[dt, Time]] = None) -> ObsNight:
+    @property
+    def target_coord(self) -> SkyCoord:
+        return self._target_coord
+    
+    @property
+    def objname(self) -> str:
+        return self._objname
+    
+    @property
+    def target_altaz(self) -> AltAz:
+        return self._target_coord.transform_to(AltAz(obstime=self.utctime, location=self.observer._earthlocation))
+
+    @property
+    def data_dict(self) -> staraltParams:
+        if not hasattr(self, 'data') or not self.data:
+            raise ValueError("No data available for observability. Run set_target first.")
+        return self.data.data_dict
+    
+    @property
+    def is_observable(self) -> bool:
+        if self.min_max_obstime is not None:
+            return True
+
+    @property
+    def min_max_obstime(self):
+        target_times = np.array(self.data.target_times)  # Time array
+        visibility = np.array(self.data.visibility)  # Boolean visibility array
+
+        # Get the current time
+        current_time = self.utctime
+
+        # Find indices where the target is observable
+        visible_indices = np.where(visibility)[0]
+
+        if len(visible_indices) == 0:
+            return None  # No observable periods
+
+        # Filter times that are in the future relative to the current time
+        future_visible_indices = visible_indices[target_times[visible_indices] >= current_time]
+
+        if len(future_visible_indices) == 0:
+            return None  # No observable times remain
+
+        # Get the next observable window
+        start_idx = future_visible_indices[0]  # First available index
+        end_idx = start_idx  # Expand until visibility stops
+
+        while end_idx + 1 < len(visibility) and visibility[end_idx + 1]:
+            end_idx += 1  # Extend the window
+
+        return (target_times[start_idx], target_times[end_idx])
+
+    def next_observable_night(self, search_days: int = 7):
+        if not hasattr(self, 'data') or not self.data:
+            print("No data available for observability. Run set_target first.")
+            return None
+
+        if self.is_observable:
+            return self.min_max_obstime
+        # Start checking for the next night
+        utctime = self.utctime  # Current reference time
+        added_days = 0
+        while added_days < search_days:
+            utctime += timedelta(days=1)  # Move to the next day
+            self._set_night(utctime)  # Update observation night
+            self.set_target(self.target_coord.ra.deg, self.target_coord.dec.deg)  # Recalculate observability
+            
+            if self.is_observable:
+                return self.min_max_obstime  # Return next available time
+            added_days +=1
+        print(f"No observable time found within {search_days} days.")
+        return None
+
+    def _set_night(self, utctime: Optional[Union[dt, Time]] = None) -> obsNightParams:
         """
         Set the night for the given time.
         
@@ -244,7 +137,7 @@ class Staralt:
             
         Returns
         -------
-        ObsNight
+        obsNightParams
             Object containing night-related time information.
         """
         if utctime is None:
@@ -252,7 +145,7 @@ class Staralt:
         if not isinstance(utctime, Time):
             utctime = Time(utctime)
         
-        obsnight = ObsNight()
+        obsnight = obsNightParams()
         
         # Celestial information
         obsnight.sunrise_civil = self.observer.sun_risetime(utctime, horizon=0, mode='next')
@@ -267,7 +160,7 @@ class Staralt:
             obsnight.sunrise_night = self.observer.sun_risetime(obsnight.sunrise_civil, mode='previous', horizon=-18)
             obsnight.sunset_night = self.observer.sun_settime(obsnight.sunrise_civil, mode='previous', horizon=-18)
         
-        return obsnight
+        self.tonight = obsnight
 
     def _get_skycoord(self, ra: Union[float, str], dec: Union[float, str]) -> SkyCoord:
         """
@@ -302,12 +195,13 @@ class Staralt:
         else:
             raise ValueError("Unsupported RA and Dec format")
         return coord
-        
-    def staralt_data(self, 
+
+    def set_target(self, 
                      ra: Union[float, str], 
                      dec: Union[float, str], 
                      objname: Optional[str] = None, 
                      utctime: Optional[Union[dt, Time]] = None,
+                     time_shift: Optional[int] = None,
                      target_minalt: float = 30, 
                      target_minmoonsep: float = 30) -> Dict[str, Any]:
         """
@@ -319,6 +213,8 @@ class Staralt:
             Right Ascension of the target in degrees (float) or in hms format (str).
         dec : float or str
             Declination of the target in degrees (float) or in dms format (str).
+        time_shift: int
+
         objname : str, optional
             Name of the target object.
         utctime : datetime or Time, optional
@@ -334,22 +230,27 @@ class Staralt:
             A dictionary containing all data required for plotting.
         """
         # Cache the current time to avoid multiple calls
-        now = Time.now()
+        
         if utctime is None:
-            utctime = now
+            utctime = self.observer.now()
         elif not isinstance(utctime, Time):
             utctime = Time(utctime)
 
-        # Get the sky coordinates of the target
-        coord = self._get_skycoord(ra, dec)
-
+        if time_shift is not None:
+            utctime += timedelta(days=time_shift)  # Move to the next day
+            self._set_night(utctime)  # Update observation night
+        
         tonight = self.tonight
         
         # Make sure critical attributes are not None
         if (tonight.sunset_astro is None or tonight.sunrise_astro is None or 
             tonight.sunset_night is None or tonight.sunrise_night is None):
             raise ValueError("Night times not properly set - critical values are None")
-        
+
+        # Get the sky coordinates of the target
+        self._objname = objname
+        self._target_coord = self._get_skycoord(ra, dec)
+
         # Define time range for plotting using Time arithmetic
         time_range_start = tonight.sunset_astro - 2*u.hour # type: ignore
         time_range_end = tonight.sunrise_astro + 2*u.hour # type: ignore
@@ -364,53 +265,24 @@ class Staralt:
         # but we'll optimize what we can within the current structure
         moon_altaz = self.observer.moon_altaz(time_axis)
         sun_altaz = self.observer.sun_altaz(time_axis)
-        
-        # Validation - combine checks for efficiency
-        if coord is None:
-            raise ValueError("Target coordinates are None")
-            
-        # Transform to AltAz
-        target_altaz = coord.transform_to(AltAz(obstime=time_axis, location=self.observer._earthlocation))
-
-        # Validate primary objects exist before attempting to use them
-        primary_checks = [
-            (target_altaz is None, "Target altitude-azimuth calculation failed"),
-            (moon_altaz is None, "Moon altitude-azimuth coordinates could not be calculated")
-        ]
-
-        for condition, message in primary_checks:
-            if condition:
-                raise ValueError(message)
-                
-        # Now that we know the primary objects exist, check their required attributes
-        attribute_checks = [
-            (_safe_get_alt_value(target_altaz) is None, "Target altitude values are missing"),
-            (not hasattr(moon_altaz, 'separation'), "Moon coordinates object lacks separation method")
-        ]
-
-        for condition, message in attribute_checks:
-            if condition:
-                raise ValueError(message)
+        target_altaz = self._target_coord.transform_to(AltAz(obstime=time_axis, location=self.observer._earthlocation))
 
         # Now we can safely calculate separation
         target_moonsep = moon_altaz.separation(target_altaz)
 
-        if _safe_get_separation_value(target_moonsep) is None:
-            raise ValueError("Moon separation values are missing")
-
         # Extract values using our helper functions
-        target_alts = _safe_to_list(_safe_get_alt_value(target_altaz))
-        moon_alts = _safe_to_list(_safe_get_alt_value(moon_altaz))
-        sun_alts = _safe_to_list(_safe_get_alt_value(sun_altaz))
-        target_moonsep_vals = _safe_to_list(_safe_get_separation_value(target_moonsep))
+        target_alts = bumper.safe_to_list(bumper.safe_get_alt_value(target_altaz))
+        moon_alts = bumper.safe_to_list(bumper.safe_get_alt_value(moon_altaz))
+        sun_alts = bumper.safe_to_list(bumper.safe_get_alt_value(sun_altaz))
+        target_moonsep_vals = bumper.safe_to_list(bumper.safe_get_separation_value(target_moonsep))
         
         # Optimize color determination using NumPy where possible
         try:
             # Extract time values for comparison - only do this once
-            obs_times = _extract_time_values(target_altaz)
+            obs_times = bumper.safe_extract_times(target_altaz)
             
-            # Pre-allocate the color array
-            color_target = ['r'] * len(target_alts)
+            # Pre-allocate the visibility array
+            visibility = [False] * len(target_alts)
             
             # Only process if we have valid times
             if obs_times and len(obs_times) > 0:
@@ -422,52 +294,56 @@ class Staralt:
                 
                 # Combine all conditions
                 observable_mask = np.logical_and.reduce((is_night_time, is_above_min_alt, is_min_moon_sep))
-                color_target = np.where(observable_mask, 'g', 'r').tolist()
+                visibility = observable_mask.tolist()
 
         except (TypeError, AttributeError) as e:
-            print(f"Warning: Error processing values for coloring: {e}")
+            print(f"Warning: Error processing values for visibility: {e}")
             # Default to not observable
-            color_target = ['r'] * len(target_alts)
+            visibility = [False] * len(target_alts)
         
+        color_target = np.where(visibility, "g", "r").tolist()
+
         # Extract times in ISO format - do this once and cache the results
-        moon_times = _extract_times_safely(moon_altaz)
-        sun_times = _extract_times_safely(sun_altaz)
-        target_times = _extract_times_safely(target_altaz)
+        moon_times = bumper.safe_extract_time_strings(moon_altaz)
+        sun_times = bumper.safe_extract_time_strings(sun_altaz)
+        target_times = bumper.safe_extract_time_strings(target_altaz)
 
         # Convert night times to datetime with proper None checks
         tonight_data: Dict[str, Optional[dt]] = {
-            "sunset_night": _safe_get_datetime(getattr(tonight, 'sunset_night', None)),
-            "sunrise_night": _safe_get_datetime(getattr(tonight, 'sunrise_night', None)),
-            "sunset_civil": _safe_get_datetime(getattr(tonight, 'sunset_civil', None)),
-            "sunrise_civil": _safe_get_datetime(getattr(tonight, 'sunrise_civil', None))
+            "sunset_night": bumper.safe_get_datetime(getattr(tonight, 'sunset_night', None)),
+            "sunrise_night": bumper.safe_get_datetime(getattr(tonight, 'sunrise_night', None)),
+            "sunset_civil": bumper.safe_get_datetime(getattr(tonight, 'sunset_civil', None)),
+            "sunrise_civil": bumper.safe_get_datetime(getattr(tonight, 'sunrise_civil', None))
         }
 
         # Create the data dictionary - use the cached now value
         data_dict: Dict[str, Any] = {
-            "objname": objname,
-            "now_datetime": now.datetime,  # Use cached value
+            "objname": self.objname,
+            "now_datetime": utctime,  # Use cached value
             "time_range_start": time_range_start.datetime,
             "time_range_end": time_range_end.datetime,
+            "target_times": target_times,
+            "target_alts": target_alts,
+            "target_moonsep": target_moonsep_vals,
+            "visibility": visibility,
+            "color_target": color_target,
             "moon_times": moon_times,
             "moon_alts": moon_alts,
             "sun_times": sun_times,
             "sun_alts": sun_alts,
-            "target_times": target_times,
-            "target_alts": target_alts,
-            "target_moonsep": target_moonsep_vals,
-            "color_target": color_target,
             "tonight": tonight_data,
             "target_minalt": target_minalt,
-            "target_minmoonsep": target_minmoonsep
+            "target_minmoonsep": target_minmoonsep   
         }
         
-        # Store in instance variable and return
-        self.data_dict = data_dict
-        return data_dict
+        self.data = staraltParams(data_dict=data_dict)
+        return self.data
+
+
 
     def plot_staralt(self, data: Optional[Dict[str, Any]] = None, show_current_time: bool = True) -> None:
         """
-        Plot the altitude data from the dictionary returned by staralt_data().
+        Plot the altitude data from the dictionary returned by set_target().
 
         Parameters
         ----------
@@ -478,29 +354,29 @@ class Staralt:
         """
         # Unpack data, using the instance's data_dict as a fallback
         if data is None:
-            if not hasattr(self, 'data_dict') or not self.data_dict:
-                raise ValueError("No data available for plotting. Run staralt_data first.")
-            data = self.data_dict
+            if not hasattr(self, 'data') or not self.data:
+                raise ValueError("No data available for plotting. Run set_target first.")
+            data = self.data
 
         # Extract data from dictionary with proper default handling
-        objname = _safe_get(data, "objname")
-        now_datetime = _safe_get(data, "now_datetime")
-        moon_times = _safe_get(data, "moon_times", [])
-        moon_alts = _safe_get(data, "moon_alts", [])
-        target_times = _safe_get(data, "target_times", [])
-        target_alts = _safe_get(data, "target_alts", [])
-        color_target = _safe_get(data, "color_target", [])
-        tonight = _safe_get(data, "tonight", {})
-        target_minalt = float(_safe_get(data, "target_minalt", 30))
-        target_minmoonsep = float(_safe_get(data, "target_minmoonsep", 30))
+        objname = data.objname
+        now_datetime = data.now_datetime
+        moon_times = data.moon_times
+        moon_alts = data.moon_alts
+        target_times = data.target_times
+        target_alts = data.target_alts
+        color_target = data.color_target
+        tonight = data.tonight
+        target_minalt = data.target_minalt
+        target_minmoonsep = data.target_minmoonsep
         
         # Extract and convert all datetime objects at once for better performance
         datetime_conversions = {
             "now": now_datetime,
-            "sunset_night": _safe_get(tonight, "sunset_night"),
-            "sunrise_night": _safe_get(tonight, "sunrise_night"),
-            "sunset_civil": _safe_get(tonight, "sunset_civil"),
-            "sunrise_civil": _safe_get(tonight, "sunrise_civil")
+            "sunset_night": tonight["sunset_night"],
+            "sunrise_night": tonight["sunrise_night"],
+            "sunset_civil": tonight["sunset_civil"],
+            "sunrise_civil": tonight["sunrise_civil"]
         }
         
         # Check for required night times
@@ -511,7 +387,7 @@ class Staralt:
         # Bulk convert to numeric format
         numeric_times = {}
         for key, dt_value in datetime_conversions.items():
-            numeric_times[key] = _safe_date2num(dt_value)
+            numeric_times[key] = bumper.safe_date2num(dt_value)
             
         # Validate critical numeric values
         critical_keys = required_times
@@ -528,28 +404,9 @@ class Staralt:
         # Optimize time conversion by creating a conversion cache
         time_conversion_cache = {}
         
-        def _cached_time_to_num(time_str):
-            """Convert time string to numeric with caching for better performance."""
-            if isinstance(time_str, (str, datetime)) and time_str in time_conversion_cache:
-                return time_conversion_cache[time_str]
-                
-            try:
-                if isinstance(time_str, str):
-                    dt_obj = datetime.fromisoformat(time_str)
-                    result = _safe_date2num(dt_obj) or 0.0
-                else:
-                    result = _safe_date2num(time_str) or 0.0
-                    
-                # Cache the result
-                time_conversion_cache[time_str] = result
-                return result
-            except (ValueError, TypeError) as e:
-                print(f"Warning: Cannot convert time {time_str}: {e}")
-                return 0.0
-        
         # Convert moon and target times to numeric using the cached function
-        moon_times_num = [_cached_time_to_num(t) for t in moon_times]
-        target_times_num = [_cached_time_to_num(t) for t in target_times]
+        moon_times_num = [bumper.safe_cached_time_to_num(t, time_conversion_cache) for t in moon_times]
+        target_times_num = [bumper.safe_cached_time_to_num(t, time_conversion_cache) for t in target_times]
         
         # Calculate middle of the night once
         mid_night_num = sunset_night_num + 0.5 * (sunrise_night_num - sunset_night_num) if (sunset_night_num is not None and sunrise_night_num is not None) else 0.0
@@ -598,8 +455,8 @@ class Staralt:
                     
                     # Get numeric values for plotting
                     if obs_start_time and obs_end_time:
-                        obs_start_num = _safe_date2num(obs_start_time)
-                        obs_end_num = _safe_date2num(obs_end_time)
+                        obs_start_num = bumper.safe_date2num(obs_start_time)
+                        obs_end_num = bumper.safe_date2num(obs_end_time)
                         
                         # Calculate observation times
                         if obs_start_time and obs_end_time:
@@ -648,10 +505,10 @@ class Staralt:
         # Batch together similar plotting operations
         
         # 1. Plot data points
-        if moon_times_num and moon_alts:
+        if moon_times_num is not None and moon_alts is not None:
             plt.scatter(moon_times_num, moon_alts, c='b', s=10, marker='.', label='Moon')
 
-        if target_times_num and target_alts and color_target:
+        if target_times_num is not None and target_alts is not None and color_target is not None:
             plt.scatter(target_times_num, target_alts, c=color_target, s=30, marker='*', label='Target')
 
         # 2. Fill regions and draw lines - use float conversion just once per value

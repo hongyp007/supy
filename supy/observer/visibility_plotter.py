@@ -3,8 +3,8 @@ import tempfile
 import shutil
 import time
 from datetime import datetime, timedelta
-from mainobserver import mainObserver
-from staralt import Staralt
+from .mainobserver import mainObserver
+from .staralt import Staralt
 import matplotlib.pyplot as plt
 import logging
 import pytz
@@ -94,7 +94,7 @@ class VisibilityPlotter:
         
         try:
             # Extract relevant information from staralt_data_dict
-            now_datetime = staralt_data_dict.get("now_datetime")
+            now_datetime = staralt_data_dict.get("now_datetime").datetime
             color_target = staralt_data_dict.get("color_target", [])
             target_times = staralt_data_dict.get("target_times", [])
             target_alts = staralt_data_dict.get("target_alts", [])
@@ -395,7 +395,7 @@ class VisibilityPlotter:
             self.logger.error(f"Error formatting visibility message: {e}", exc_info=True)
             return f"*Visibility Analysis Error*\nCould not format visibility information: {str(e)}"
 
-    def create_visibility_plot(self, ra, dec, grb_name=None, test_mode=False, minalt=30, minmoonsep=30):
+    def create_visibility_plot(self, ra, dec, grb_name=None, test_mode=False, minalt=30, minmoonsep=30, savefig=True):
         """
         Create a visibility plot for given coordinates.
         
@@ -412,7 +412,7 @@ class VisibilityPlotter:
         """
         try:
             # First get initial visibility data to determine status
-            self.staralt.staralt_data(
+            self.staralt.set_target(
                 ra=ra,
                 dec=dec,
                 objname=grb_name,
@@ -431,7 +431,7 @@ class VisibilityPlotter:
                 tomorrow = datetime.now() + timedelta(days=1)
                 
                 # Generate visibility data for tomorrow
-                self.staralt.staralt_data(
+                self.staralt.set_target(
                     ra=ra,
                     dec=dec,
                     objname=grb_name if grb_name else "Target",
@@ -441,7 +441,7 @@ class VisibilityPlotter:
                 )
                 
                 # Re-analyze visibility with tomorrow's data
-                tomorrow_visibility_info = self._analyze_visibility(self.staralt.data_dict)
+                tomorrow_visibility_info = self._analyze_visibility(self.staralt.staralt)
                 
                 # Add showing_tomorrow flag to tomorrow's data
                 visibility_info["showing_tomorrow"] = True
@@ -493,8 +493,9 @@ class VisibilityPlotter:
                         bbox=dict(facecolor='yellow', alpha=0.5, boxstyle='round'))
             
             # Save plot
-            plt.savefig(temp_path, bbox_inches='tight')
-            plt.close()
+            if savefig:
+                plt.savefig(temp_path, bbox_inches='tight')
+                plt.close()
             
             self.logger.info(f"Successfully created visibility plot for {grb_name or 'target'}")
             return temp_path, visibility_info

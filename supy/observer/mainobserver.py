@@ -145,6 +145,7 @@ class mainObserver:
         if utctimes is None:
             utctimes = datetime.utcnow()
         localtime = pytz.utc.localize(utctimes).astimezone(self._timezone)
+        localtime = Time(localtime, format="datetime", scale="utc")
         return localtime
 
     def now(self):
