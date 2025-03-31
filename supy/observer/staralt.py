@@ -452,6 +452,8 @@ class Staralt:
             "moon_alts": moon_alts,
             "sun_times": sun_times,
             "sun_alts": sun_alts,
+            "target_ra": ra,
+            "target_dec": dec,
             "target_times": target_times,
             "target_alts": target_alts,
             "target_moonsep": target_moonsep_vals,

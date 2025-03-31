@@ -1,6 +1,6 @@
 import os
 import tempfile
-import shutil
+import math
 import time
 from datetime import datetime, timedelta
 from mainobserver import mainObserver
@@ -94,6 +94,49 @@ class VisibilityPlotter:
             except:
                 return "Time format error"
     
+    def _predict_altitude_change(self, ra, dec, observer_lat):
+        """
+        Calculate expected altitude change for tomorrow based on astronomical factors.
+        
+        Args:
+            ra: Right ascension in degrees
+            dec: Declination in degrees
+            observer_lat: Observer's latitude in degrees
+            
+        Returns:
+            float: Expected altitude change in degrees
+        """
+        try:
+            # Convert to radians for calculation
+            dec_rad = math.radians(dec)
+            lat_rad = math.radians(observer_lat)
+            
+            # Factor 1: Declination effect
+            # Objects near celestial equator (dec=0) change more than those near poles
+            # The further an object is from the celestial equator, the less its altitude changes
+            dec_factor = math.cos(dec_rad) * 0.8  # Maximum ~0.8° change for objects at dec=0
+            
+            # Factor 2: Latitude effect
+            # Objects closer to observer's latitude show smaller changes
+            lat_effect = 1.0 - 0.5 * abs(math.sin(lat_rad) * math.sin(dec_rad))
+            
+            # Factor 3: Time of year effect (simplified)
+            # Seasonal effect on altitude change
+            current_date = datetime.now()
+            day_of_year = current_date.timetuple().tm_yday
+            time_factor = 0.2 * math.sin(math.radians((day_of_year / 365.0) * 360.0))
+            
+            # Combine factors to estimate the daily altitude change
+            # Base change is ~1° per day due to Earth's orbit
+            base_change = 1.0
+            total_change = base_change * dec_factor * lat_effect + time_factor
+            
+            return total_change
+            
+        except Exception as e:
+            self.logger.error(f"Error calculating altitude change: {e}")
+            return 1.0  # Default to 1° change if calculation fails
+
     def _analyze_visibility(self, staralt_data_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
         Analyze visibility data for a target to determine if it's observable.
@@ -115,6 +158,8 @@ class VisibilityPlotter:
         
         try:
             # Extract relevant information with fallbacks for missing data
+            ra = staralt_data_dict.get("target_ra")
+            dec = staralt_data_dict.get("target_dec")
             now_datetime = staralt_data_dict.get("now_datetime")
             color_target = staralt_data_dict.get("color_target", [])
             target_times = staralt_data_dict.get("target_times", [])
@@ -262,8 +307,33 @@ class VisibilityPlotter:
                     
                     # If altitude is below threshold but reasonable
                     elif max_alt < min_altitude:
-                        might_be_observable_tomorrow = True
-                        detailed_reason = f"Target maximum altitude ({max_alt:.1f}°) is below threshold today ({min_altitude}°), may be higher tomorrow due to Earth's rotation"
+                        # Calculate the altitude gap
+                        altitude_gap = min_altitude - max_alt
+                        
+                        # Get observer's latitude from the observer object
+                        observer_lat = self.observer._latitude.value
+                        
+                        # Calculate expected altitude change for tomorrow
+                        expected_change = self._predict_altitude_change(ra, dec, observer_lat)
+                        
+                        # Log the detailed prediction calculations
+                        self.logger.debug(f"Altitude prediction: gap={altitude_gap:.2f}°, expected_change={expected_change:.2f}°")
+                        
+                        # Determine if the target might be observable tomorrow
+                        if altitude_gap <= expected_change:
+                            confidence = min(100, int((expected_change / altitude_gap) * 100))
+                            might_be_observable_tomorrow = True
+                            detailed_reason = (
+                                f"Target maximum altitude ({max_alt:.1f}°) is below threshold today ({min_altitude}°) "
+                                f"by {altitude_gap:.1f}°, expected to change by ~{expected_change:.1f}° tomorrow "
+                                f"({confidence}% confidence)"
+                            )
+                        else:
+                            might_be_observable_tomorrow = False
+                            detailed_reason = (
+                                f"Target maximum altitude ({max_alt:.1f}°) is too far below threshold ({min_altitude}°) "
+                                f"by {altitude_gap:.1f}°, but expected to change by only ~{expected_change:.1f}° tomorrow"
+                            )
                     
                     # If window passed earlier today
                     elif observable_indices and not future_observable:
@@ -292,7 +362,7 @@ class VisibilityPlotter:
                 else:
                     # Regular not observable status
                     if max_alt <= 0:
-                        result["condition"] = "Never Rises"
+                        result["condition"] = "Not Visible (North Hemisphere target)"
                         result["reason"] = f"Target never rises above horizon from this location"
                     elif max_alt < min_altitude:
                         result["condition"] = "Below Minimum Altitude"
@@ -542,35 +612,35 @@ class VisibilityPlotter:
                 sections.extend(details)
                 
             elif status == "observable_tomorrow":
-                # Enhanced tomorrow observability details with clear explanation
+                # Get tomorrow's start time if available
+                tomorrow_start_time = visibility_info.get("tomorrow_start_time")
+                tomorrow_end_time = visibility_info.get("tomorrow_end_time")
+                tomorrow_observable_hours = visibility_info.get("tomorrow_observable_hours", 0)
+                
+                # Format the start time if available
+                start_time_text = "Unknown"
+                if tomorrow_start_time:
+                    start_time_text = self._format_time_clt_kst(tomorrow_start_time)
+                    
+                # Format the end time if available
+                end_time_text = "Unknown"
+                if tomorrow_end_time:
+                    end_time_text = self._format_time_clt_kst(tomorrow_end_time)
+                
+                # Extract the reason
                 reason = visibility_info.get("reason", "Target may be observable tomorrow")
                 
-                # Calculate tomorrow's timing information
-                tomorrow = datetime.now() + timedelta(days=1)
-                tomorrow_date = tomorrow.strftime("%Y-%m-%d")
+                details = [
+                    f"> - 📆 *Tomorrow's observability ({visibility_info.get('tomorrow_date')})*:",
+                    f"> - 🔍 *Reason*: {reason}",
+                ]
                 
-                # Get observable window if available from tomorrow's analysis
-                if visibility_info.get("observable_start") and visibility_info.get("observable_end"):
-                    start_time = visibility_info.get("observable_start")
-                    end_time = visibility_info.get("observable_end")
-                    window_hours = visibility_info.get("observable_hours", 0)
-                    
-                    start_formatted = self._format_time_clt_kst(start_time)
-                    end_formatted = self._format_time_clt_kst(end_time)
-                    
-                    details = [
-                        f"> - 📆 *Tomorrow's observability ({tomorrow_date})*:",
-                        f"> - 🔍 *Reason*: {reason}",
-                        f"> - 🕙 *Expected window*: {start_formatted} to {end_formatted} (*{window_hours:.1f} hours*)"
-                    ]
-                    
-                    # Add best time if available
-                    if visibility_info.get("best_time"):
-                        best_time = visibility_info.get("best_time")
-                        best_formatted = self._format_time_clt_kst(best_time)
-                        details.append(f"> - ⭐ *Best observation time*: {best_formatted}")
+                # Add time information if available
+                if tomorrow_start_time:
+                    details.append(f"> - 🕘 *Predicted observation window*: {start_time_text} to {end_time_text}")
+                    details.append(f"> - ⏱️ *Duration*: {tomorrow_observable_hours:.1f} hours")
                 else:
-                    # Use estimated values
+                    # Fallback to estimation if exact times aren't available
                     max_alt = visibility_info.get("max_altitude", 0)
                     
                     # Estimate window duration based on max altitude
@@ -581,11 +651,7 @@ class VisibilityPlotter:
                     else:
                         est_hours = 3.0
                     
-                    details = [
-                        f"> - 📆 *Tomorrow's observability ({tomorrow_date})*:",
-                        f"> - 🔍 *Reason*: {reason}",
-                        f"> - 🕙 *Estimated window*: ~{est_hours:.1f} hours"
-                    ]
+                    details.append(f"> - 🕙 *Estimated window*: ~{est_hours:.1f} hours (exact times unknown)")
                 
                 # Add moon phase info - moon position will change for tomorrow
                 if moon_emoji and phase_desc:
@@ -679,11 +745,16 @@ class VisibilityPlotter:
                 visibility_info["showing_tomorrow"] = True
                 visibility_info["tomorrow_date"] = tomorrow.strftime("%Y-%m-%d")
                 
-                # Copy useful visibility data from tomorrow's analysis
-                # but keep the original "observable_tomorrow" status
-                for key in ["observable_start", "observable_end", "observable_hours", "best_time"]:
-                    if key in tomorrow_visibility_info:
-                        visibility_info[key] = tomorrow_visibility_info[key]
+                # Save tomorrow's predicted observation start time 
+                if tomorrow_visibility_info.get("status") in ["observable_now", "observable_later"]:
+                    # Get the predicted start time from tomorrow's analysis
+                    visibility_info["tomorrow_start_time"] = tomorrow_visibility_info.get("observable_start")
+                    
+                    # Also get predicted end time and observable hours if available
+                    visibility_info["tomorrow_end_time"] = tomorrow_visibility_info.get("observable_end")
+                    visibility_info["tomorrow_observable_hours"] = tomorrow_visibility_info.get("observable_hours")
+                else:
+                    visibility_info["tomorrow_start_time"] = None
             
             # If not observable, return early with no plot
             if visibility_info.get("status") == "not_observable":
