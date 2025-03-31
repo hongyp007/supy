@@ -1,7 +1,5 @@
-extensions = [
-    'nbsphinx',
-    'sphinx.ext.mathjax',
-    'sphinx_rtd_theme'
-]
+project = 'supy'
+
+extensions = ['sphinx.ext.autodoc', 'sphinx_rtd_theme', 'nbsphinx']
 
 html_theme = "sphinx_rtd_theme"
