@@ -1,29 +1,21 @@
-Welcome to gppy's documentation!
+Welcome to supy's documentation!
 ================================
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   installation
-   tutorial
-   api
 
 Installation
 ============
 
-.. include:: installation.rst
+Instructions for installing supy go here.
 
 Tutorial
 ========
 
-The following tutorials are generated from Jupyter Notebooks in `docs/examples/`.
-
 .. toctree::
-   :maxdepth: 1
-   :glob:
+   :maxdepth: 3
+   :caption: Contents:
 
-   examples/*
+   install
+   examples/index
+   api/modules
 
 API Reference
 =============

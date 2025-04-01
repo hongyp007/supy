@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Main Observer &mdash; Project name not set  documentation</title>
+  <title>Observer &mdash; supy  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -23,7 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="../index.html" /> 
+    <link rel="next" title="Tiles" href="tiles.html" />
+    <link rel="prev" title="Welcome to supy’s documentation!" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +36,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            Project name not set
+            supy
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,21 +46,24 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Main Observer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Current-UTC-and-local-time">Current UTC and local time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Current-Moon-alt-and-az">Current Moon alt and az</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Current-Sunrise-and-Sunset">Current Sunrise and Sunset</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Observer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Main-Observer">Main Observer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Current-UTC-and-local-time">Current UTC and local time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Current-Moon-alt-and-az">Current Moon alt and az</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Current-Sunrise-and-Sunset">Current Sunrise and Sunset</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#StarAlt">StarAlt</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Select-the-target">Select the target</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Check-observability">Check observability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Next-available-time">Next available time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Plot-the-visibility">Plot the visibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#StarAlt">StarAlt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Select-the-target">Select the target</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Check-observability">Check observability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Next-available-time">Next available time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Plot-the-visibility">Plot the visibility</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tiles.html">Tiles</a></li>
 </ul>
 
         </div>
@@ -68,7 +72,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Project name not set</a>
+          <a href="../index.html">supy</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -76,7 +80,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Main Observer</li>
+      <li class="breadcrumb-item active">Observer</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/observer.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,16 +90,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="nbinput nblast docutils container">
+  <section id="Observer">
+<h1>Observer<a class="headerlink" href="#Observer" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">supy.observer</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">supy.observer</span><span class="w"> </span><span class="kn">import</span> <span class="n">mainObserver</span><span class="p">,</span> <span class="n">Staralt</span>
 </pre></div>
 </div>
 </div>
 <section id="Main-Observer">
-<h1>Main Observer<a class="headerlink" href="#Main-Observer" title="Link to this heading"></a></h1>
+<h2>Main Observer<a class="headerlink" href="#Main-Observer" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -105,7 +111,7 @@
 </div>
 </div>
 <section id="Current-UTC-and-local-time">
-<h2>Current UTC and local time<a class="headerlink" href="#Current-UTC-and-local-time" title="Link to this heading"></a></h2>
+<h3>Current UTC and local time<a class="headerlink" href="#Current-UTC-and-local-time" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -125,7 +131,7 @@
 </div>
 </section>
 <section id="Current-Moon-alt-and-az">
-<h2>Current Moon alt and az<a class="headerlink" href="#Current-Moon-alt-and-az" title="Link to this heading"></a></h2>
+<h3>Current Moon alt and az<a class="headerlink" href="#Current-Moon-alt-and-az" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -146,7 +152,7 @@
 </div>
 </section>
 <section id="Current-Sunrise-and-Sunset">
-<h2>Current Sunrise and Sunset<a class="headerlink" href="#Current-Sunrise-and-Sunset" title="Link to this heading"></a></h2>
+<h3>Current Sunrise and Sunset<a class="headerlink" href="#Current-Sunrise-and-Sunset" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -167,7 +173,7 @@
 </section>
 </section>
 <section id="StarAlt">
-<h1>StarAlt<a class="headerlink" href="#StarAlt" title="Link to this heading"></a></h1>
+<h2>StarAlt<a class="headerlink" href="#StarAlt" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -177,7 +183,7 @@
 </div>
 </div>
 <section id="Select-the-target">
-<h2>Select the target<a class="headerlink" href="#Select-the-target" title="Link to this heading"></a></h2>
+<h3>Select the target<a class="headerlink" href="#Select-the-target" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -230,7 +236,7 @@ target_minmoonsep: 30
 </div>
 </section>
 <section id="Check-observability">
-<h2>Check observability<a class="headerlink" href="#Check-observability" title="Link to this heading"></a></h2>
+<h3>Check observability<a class="headerlink" href="#Check-observability" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
@@ -250,7 +256,7 @@ target_minmoonsep: 30
 </div>
 </section>
 <section id="Next-available-time">
-<h2>Next available time<a class="headerlink" href="#Next-available-time" title="Link to this heading"></a></h2>
+<h3>Next available time<a class="headerlink" href="#Next-available-time" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
@@ -290,7 +296,7 @@ target_minmoonsep: 30
 </div>
 </section>
 <section id="Plot-the-visibility">
-<h2>Plot the visibility<a class="headerlink" href="#Plot-the-visibility" title="Link to this heading"></a></h2>
+<h3>Plot the visibility<a class="headerlink" href="#Plot-the-visibility" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
@@ -303,7 +309,7 @@ target_minmoonsep: 30
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_observer_20_0.png" src="../_images/examples_observer_20_0.png" />
+<img alt="../_images/examples_observer_21_0.png" src="../_images/examples_observer_21_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -316,12 +322,14 @@ target_minmoonsep: 30
 </div>
 </section>
 </section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to supy’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tiles.html" class="btn btn-neutral float-right" title="Tiles" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiles &mdash; supy  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            supy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">supy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">supy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tiles</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/_build/html/examples/tiles.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tiles">
+<h1>Tiles<a class="headerlink" href="#Tiles" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">supy.tiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tiles</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="n">Tiles</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<section id="Provide-the-list-of-ra-and-dec">
+<h2>Provide the list of ra and dec<a class="headerlink" href="#Provide-the-list-of-ra-and-dec" title="Link to this heading"></a></h2>
+<section id="Method-1">
+<h3>Method 1<a class="headerlink" href="#Method-1" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="mf">173.6688</span><span class="p">,</span> <span class="o">-</span><span class="mf">21.05625</span>
+
+<span class="n">T</span><span class="o">.</span><span class="n">find_overlapping_tiles</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">,</span> <span class="n">list_aperture</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">match_tolerance_minutes</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fraction_overlap_lower</span><span class="o">=</span> <span class="mf">0.1</span> <span class="p">)</span>
+<span class="n">T</span><span class="o">.</span><span class="n">target_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=1</i>
+<table id="table4961516176" class="table-striped table-bordered table-condensed">
+<thead><tr><th>ra</th><th>dec</th><th>hhmmss</th><th>ddmmss</th><th>j2000</th><th>aperture</th><th>matched_idx</th><th>matched_tile</th></tr></thead>
+<thead><tr><th>float64</th><th>float64</th><th>str12</th><th>str11</th><th>str20</th><th>int64</th><th>int64</th><th>str6</th></tr></thead>
+<tr><td>173.6688</td><td>-21.05625</td><td>11:34:40.512</td><td>-21:03:22.5</td><td>J113440.51-21-322.50</td><td>0</td><td>0</td><td>T12180</td></tr>
+</table></div></div>
+</div>
+</section>
+<section id="Method-2">
+<h3>Method 2<a class="headerlink" href="#Method-2" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">j2000</span> <span class="o">=</span> <span class="s1">&#39;J110633.45-182124.19&#39;</span>
+
+<span class="n">T</span><span class="o">.</span><span class="n">find_overlapping_tiles</span><span class="p">(</span><span class="n">j2000</span><span class="o">=</span><span class="n">j2000</span><span class="p">,</span> <span class="n">list_aperture</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">match_tolerance_minutes</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fraction_overlap_lower</span><span class="o">=</span> <span class="mf">0.1</span> <span class="p">)</span>
+<span class="n">T</span><span class="o">.</span><span class="n">target_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=1</i>
+<table id="table4961509840" class="table-striped table-bordered table-condensed">
+<thead><tr><th>ra</th><th>dec</th><th>hhmmss</th><th>ddmmss</th><th>j2000</th><th>aperture</th><th>matched_idx</th><th>matched_tile</th></tr></thead>
+<thead><tr><th>float64</th><th>float64</th><th>str11</th><th>str12</th><th>str21</th><th>int64</th><th>int64</th><th>str6</th></tr></thead>
+<tr><td>166.63937499999997</td><td>-18.356719444444447</td><td>11:06:33.45</td><td>-18:21:24.19</td><td>J110633.45-18-2124.19</td><td>0</td><td>0</td><td>T12965</td></tr>
+</table></div></div>
+</div>
+</section>
+<section id="Method-3">
+<h3>Method 3<a class="headerlink" href="#Method-3" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loc</span> <span class="o">=</span> <span class="p">[</span><span class="mf">173.6688</span><span class="p">,</span> <span class="o">-</span><span class="mf">21.05625</span><span class="p">]</span>
+
+<span class="n">T</span><span class="o">.</span><span class="n">find_overlapping_tiles</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">,</span> <span class="n">list_aperture</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">match_tolerance_minutes</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fraction_overlap_lower</span><span class="o">=</span> <span class="mf">0.1</span> <span class="p">)</span>
+<span class="n">T</span><span class="o">.</span><span class="n">target_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=1</i>
+<table id="table4961615680" class="table-striped table-bordered table-condensed">
+<thead><tr><th>ra</th><th>dec</th><th>hhmmss</th><th>ddmmss</th><th>j2000</th><th>aperture</th><th>matched_idx</th><th>matched_tile</th></tr></thead>
+<thead><tr><th>float64</th><th>float64</th><th>str12</th><th>str11</th><th>str20</th><th>int64</th><th>int64</th><th>str6</th></tr></thead>
+<tr><td>173.6688</td><td>-21.05625</td><td>11:34:40.512</td><td>-21:03:22.5</td><td>J113440.51-21-322.50</td><td>0</td><td>0</td><td>T12180</td></tr>
+</table></div></div>
+</div>
+</section>
+</section>
+<section id="List-of-localizations">
+<h2>List of localizations<a class="headerlink" href="#List-of-localizations" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loc</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">173.6688</span><span class="p">,</span> <span class="o">-</span><span class="mf">21.05625</span><span class="p">],</span> <span class="p">[</span><span class="mf">12.6688</span><span class="p">,</span> <span class="o">-</span><span class="mf">32.05625</span><span class="p">]]</span>
+
+<span class="n">T</span><span class="o">.</span><span class="n">find_overlapping_tiles</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span>
+                         <span class="n">match_tolerance_minutes</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fraction_overlap_lower</span><span class="o">=</span> <span class="mf">0.1</span> <span class="p">)</span>
+<span class="n">T</span><span class="o">.</span><span class="n">target_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=2</i>
+<table id="table4961608048" class="table-striped table-bordered table-condensed">
+<thead><tr><th>ra</th><th>dec</th><th>hhmmss</th><th>ddmmss</th><th>j2000</th><th>aperture</th><th>matched_idx</th><th>matched_tile</th></tr></thead>
+<thead><tr><th>float64</th><th>float64</th><th>str12</th><th>str11</th><th>str20</th><th>int64</th><th>int64</th><th>str6</th></tr></thead>
+<tr><td>173.6688</td><td>-21.05625</td><td>11:34:40.512</td><td>-21:03:22.5</td><td>J113440.51-21-322.50</td><td>0</td><td>0</td><td>T12180</td></tr>
+<tr><td>12.6688</td><td>-32.05625</td><td>0:50:40.512</td><td>-32:03:22.5</td><td>J005040.51-32-322.50</td><td>0</td><td>1</td><td>T08819</td></tr>
+</table></div></div>
+</div>
+</section>
+<section id="Matched-tile-information">
+<h2>Matched tile information<a class="headerlink" href="#Matched-tile-information" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span><span class="o">.</span><span class="n">tile_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=2</i>
+<table id="table4961611600" class="table-striped table-bordered table-condensed">
+<thead><tr><th>id</th><th>ra</th><th>dec</th><th>ra1</th><th>dec1</th><th>ra2</th><th>dec2</th><th>ra3</th><th>dec3</th><th>ra4</th><th>dec4</th><th>matched_idx</th><th>distance_to_boundary</th><th>overlapped_area</th><th>is_within_boundary</th></tr></thead>
+<thead><tr><th>str6</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>int64</th><th>float64</th><th>int64</th><th>bool</th></tr></thead>
+<tr><td>T12180</td><td>173.79310344827587</td><td>-21.226415094339615</td><td>174.52835458030515</td><td>-20.767318019947634</td><td>174.53292925678073</td><td>-21.682308083156066</td><td>173.05327763977098</td><td>-21.682308083156066</td><td>173.05785231624662</td><td>-20.767318019947634</td><td>0</td><td>0.2889319800523644</td><td>1</td><td>True</td></tr>
+<tr><td>T08819</td><td>12.100840336134453</td><td>-32.26415094339622</td><td>12.909783207366115</td><td>-31.80406015235267</td><td>12.917979695837674</td><td>-32.71903390162755</td><td>11.283700976431229</td><td>-32.71903390162755</td><td>11.291897464902789</td><td>-31.80406015235267</td><td>1</td><td>0.24323260700117935</td><td>1</td><td>True</td></tr>
+</table></div></div>
+</div>
+</section>
+<section id="Visualize-the-tiles">
+<h2>Visualize the tiles<a class="headerlink" href="#Visualize-the-tiles" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span><span class="o">.</span><span class="n">visualize_tiles</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/_build_html_examples_tiles_15_0.png" src="../../../_images/_build_html_examples_tiles_15_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
