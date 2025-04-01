@@ -7,3 +7,4 @@ Examples
 
    observer.ipynb
    tiles.ipynb
+   simulator.ipynb

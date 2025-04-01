@@ -11,12 +11,12 @@ from datetime import datetime
 from astropy.table import vstack
 from typing import List, Union
 from .coord import parse_coordinates
+from ..const import REFDATA_DIR
 
 class Tiles:
     def __init__(self, tile_path: str = None):
         if tile_path is None:
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            self.tile_path = os.path.join(current_dir, './tileinfo/7-DT/final_tiles.txt')
+            self.tile_path = os.path.join(REFDATA_DIR, 'tileinfo/7-DT/final_tiles.txt')
         else:
             self.tile_path = tile_path
         self.tbl_RIS = None

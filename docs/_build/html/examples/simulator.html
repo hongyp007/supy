@@ -1,0 +1,607 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulator &mdash; supy  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="supy" href="../api/modules.html" />
+    <link rel="prev" title="Tiles" href="tiles.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            supy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="observer.html">Observer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tiles.html">Tiles</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simulator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Filter">Filter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#7DT-filterset-by-default">7DT filterset by default</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDSS-filterset">SDSS filterset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Manual-tophat-filterset">Manual tophat filterset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Filter-info">Filter info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Response">Response</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Optics">Optics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Quentum-efficiency">Quentum efficiency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sky-transmission">Sky transmission</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Simulator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-response-curve">Plot response curve</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-sensitivity">Calculate sensitivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Synthesize-photometry">Synthesize photometry</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">supy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">supy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Simulator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/simulator.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Simulator">
+<h1>Simulator<a class="headerlink" href="#Simulator" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+<section id="Filter">
+<h2>Filter<a class="headerlink" href="#Filter" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">supy.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Filter</span>
+</pre></div>
+</div>
+</div>
+<section id="7DT-filterset-by-default">
+<h3>7DT filterset by default<a class="headerlink" href="#7DT-filterset-by-default" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filt</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">()</span>
+<span class="n">filt</span><span class="o">.</span><span class="n">plot_filterset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Transmission [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_5_1.png" src="../_images/examples_simulator_5_1.png" />
+</div>
+</div>
+</section>
+<section id="SDSS-filterset">
+<h3>SDSS filterset<a class="headerlink" href="#SDSS-filterset" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filt</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">filterset</span><span class="o">=</span><span class="s2">&quot;sdss&quot;</span><span class="p">)</span>
+<span class="n">filt</span><span class="o">.</span><span class="n">plot_filterset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Transmission [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_7_1.png" src="../_images/examples_simulator_7_1.png" />
+</div>
+</div>
+</section>
+<section id="Manual-tophat-filterset">
+<h3>Manual tophat filterset<a class="headerlink" href="#Manual-tophat-filterset" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filt</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">filterset</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">bandmin</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">bandmax</span><span class="o">=</span><span class="mi">3500</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bandstep</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">bandrsp</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">filt</span><span class="o">.</span><span class="n">plot_filterset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Transmission [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_9_1.png" src="../_images/examples_simulator_9_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Filter-info">
+<h2>Filter info<a class="headerlink" href="#Filter-info" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filt</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">()</span>
+<span class="n">filt</span><span class="o">.</span><span class="n">filterset</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=1000</i>
+<table id="table10860942608" class="table-striped table-bordered table-condensed">
+<thead><tr><th>wavelength</th><th>m4000</th><th>m4125</th><th>m4250</th><th>m4375</th><th>m4500</th><th>m4625</th><th>m4750</th><th>m4875</th><th>m5000</th><th>m5125</th><th>m5250</th><th>m5375</th><th>m5500</th><th>m5625</th><th>m5750</th><th>m5875</th><th>m6000</th><th>m6125</th><th>m6250</th><th>m6375</th><th>m6500</th><th>m6625</th><th>m6750</th><th>m6875</th><th>m7000</th><th>m7125</th><th>m7250</th><th>m7375</th><th>m7500</th><th>m7625</th><th>m7750</th><th>m7875</th><th>m8000</th><th>m8125</th><th>m8250</th><th>m8375</th><th>m8500</th><th>m8625</th><th>m8750</th><th>m8875</th></tr></thead>
+<thead><tr><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th></tr></thead>
+<tr><td>1000.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>1009.009009009009</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>1018.018018018018</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>1027.027027027027</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>1036.036036036036</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>1045.045045045045</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+<tr><td>9945.945945945947</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>9954.954954954956</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>9963.963963963964</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>9972.972972972973</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>9981.981981981982</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>9990.990990990991</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+<tr><td>10000.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+</table></div></div>
+</div>
+</section>
+<section id="Response">
+<h2>Response<a class="headerlink" href="#Response" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">supy.simulator.response</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<section id="Optics">
+<h3>Optics<a class="headerlink" href="#Optics" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_table</span><span class="p">(</span><span class="n">get_optics</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Efficiency [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_15_1.png" src="../_images/examples_simulator_15_1.png" />
+</div>
+</div>
+</section>
+<section id="Quentum-efficiency">
+<h3>Quentum efficiency<a class="headerlink" href="#Quentum-efficiency" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_table</span><span class="p">(</span><span class="n">get_QE_factor</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Quentum Efficiency [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_17_1.png" src="../_images/examples_simulator_17_1.png" />
+</div>
+</div>
+</section>
+<section id="Sky-transmission">
+<h3>Sky transmission<a class="headerlink" href="#Sky-transmission" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_table</span><span class="p">(</span><span class="n">get_sky_transmission</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Transmission [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_19_1.png" src="../_images/examples_simulator_19_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h2>Simulator<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">supy.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulator</span>
+</pre></div>
+</div>
+</div>
+<section id="Plot-response-curve">
+<h3>Plot response curve<a class="headerlink" href="#Plot-response-curve" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdt</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">()</span>
+<span class="n">sdt</span><span class="o">.</span><span class="n">plot_response</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Adopt the default 7DT filterset
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Response [%]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_23_2.png" src="../_images/examples_simulator_23_2.png" />
+</div>
+</div>
+</section>
+<section id="Calculate-sensitivity">
+<h3>Calculate sensitivity<a class="headerlink" href="#Calculate-sensitivity" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exptime</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">seeing</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+<span class="n">sdt</span><span class="o">.</span><span class="n">initalize</span><span class="p">(</span><span class="n">exposure</span><span class="o">=</span><span class="n">exptime</span><span class="p">,</span> <span class="n">fwhm_seeing</span><span class="o">=</span><span class="n">seeing</span><span class="p">)</span>
+<span class="n">sdt</span><span class="o">.</span><span class="n">plot_point_source_depth</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;wavelength [$\\AA$]&#39;, ylabel=&#39;Point source limits (5$\\sigma$)&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_25_1.png" src="../_images/examples_simulator_25_1.png" />
+</div>
+</div>
+<section id="Compare-with-others">
+<h4>Compare with others<a class="headerlink" href="#Compare-with-others" title="Link to this heading"></a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdt</span><span class="o">.</span><span class="n">plot_point_source_depth</span><span class="p">(</span><span class="n">add_comp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;$\\rm 5\\sigma$ Depth [AB]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_27_1.png" src="../_images/examples_simulator_27_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Synthesize-photometry">
+<h3>Synthesize photometry<a class="headerlink" href="#Synthesize-photometry" title="Link to this heading"></a></h3>
+<section id="Example-1:-Feige110">
+<h4>Example 1: Feige110<a class="headerlink" href="#Example-1:-Feige110" title="Link to this heading"></a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_testdata</span><span class="p">(</span><span class="s2">&quot;Feige110&quot;</span><span class="p">)</span>
+<span class="n">utils</span><span class="o">.</span><span class="n">plot_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Brightness [AB mag]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_30_1.png" src="../_images/examples_simulator_30_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdt</span><span class="o">.</span><span class="n">get_synphot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">sdt</span><span class="o">.</span><span class="n">synth_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><i>Table length=40</i>
+<table id="table11279222576" class="table-striped table-bordered table-condensed">
+<thead><tr><th>filter</th><th>lam</th><th>bandwidth</th><th>mag_abs</th><th>z</th><th>snr</th><th>mag_app</th><th>mag_obs</th><th>mag_err</th><th>fnu_obs</th><th>fnu_err</th><th>fnu</th><th>flam_obs</th><th>flam_err</th><th>flam</th></tr></thead>
+<thead><tr><th></th><th>Angstrom</th><th></th><th></th><th></th><th></th><th>mag(AB)</th><th>mag(AB)</th><th>mag(AB)</th><th>uJy</th><th>uJy</th><th>uJy</th><th>erg / (Angstrom cm2 s)</th><th>erg / (Angstrom cm2 s)</th><th>erg / (Angstrom cm2 s)</th></tr></thead>
+<thead><tr><th>str5</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th></tr></thead>
+<tr><td>m4000</td><td>4010.913</td><td>250.000</td><td>11.252</td><td>nan</td><td>1091.397</td><td>11.252</td><td>11.253</td><td>0.010</td><td>114511.282</td><td>104.922</td><td>114611.690</td><td>2.1339409906559762e-13</td><td>1.955238465475569e-16</td><td>2.135812117017625e-13</td></tr>
+<tr><td>m4125</td><td>4134.015</td><td>250.000</td><td>11.279</td><td>nan</td><td>1176.246</td><td>11.279</td><td>11.278</td><td>0.010</td><td>111862.735</td><td>95.101</td><td>111838.117</td><td>1.9622848187077405e-13</td><td>1.6682601389167712e-16</td><td>1.9618529704255485e-13</td></tr>
+<tr><td>m4250</td><td>4257.559</td><td>250.000</td><td>11.335</td><td>nan</td><td>1226.885</td><td>11.335</td><td>11.335</td><td>0.010</td><td>106161.312</td><td>86.529</td><td>106136.751</td><td>1.7557623371543897e-13</td><td>1.4310728836013931e-16</td><td>1.755356125006737e-13</td></tr>
+<tr><td>m4375</td><td>4380.872</td><td>250.000</td><td>11.389</td><td>nan</td><td>1258.487</td><td>11.389</td><td>11.390</td><td>0.010</td><td>100894.542</td><td>80.171</td><td>100997.574</td><td>1.5760398445176519e-13</td><td>1.2523295199777686e-16</td><td>1.5776492701208275e-13</td></tr>
+<tr><td>m4500</td><td>4504.837</td><td>250.000</td><td>11.426</td><td>nan</td><td>1281.573</td><td>11.426</td><td>11.425</td><td>0.010</td><td>97734.663</td><td>76.261</td><td>97612.463</td><td>1.4438139474451135e-13</td><td>1.126595072742437e-16</td><td>1.4420087230842624e-13</td></tr>
+<tr><td>m4625</td><td>4628.747</td><td>250.000</td><td>11.482</td><td>nan</td><td>1278.294</td><td>11.482</td><td>11.482</td><td>0.010</td><td>92701.894</td><td>72.520</td><td>92745.254</td><td>1.2971265868506703e-13</td><td>1.014732697952565e-16</td><td>1.2977333016261817e-13</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+<tr><td>m8250</td><td>8245.499</td><td>250.000</td><td>12.611</td><td>nan</td><td>235.541</td><td>12.611</td><td>12.615</td><td>0.011</td><td>32660.034</td><td>138.660</td><td>32787.162</td><td>1.4401357192167532e-14</td><td>6.114172685994745e-17</td><td>1.4457414292417476e-14</td></tr>
+<tr><td>m8375</td><td>8373.650</td><td>250.000</td><td>12.640</td><td>nan</td><td>221.217</td><td>12.640</td><td>12.643</td><td>0.011</td><td>31815.560</td><td>143.821</td><td>31915.591</td><td>1.360287250406281e-14</td><td>6.149120164062451e-17</td><td>1.3645641031284661e-14</td></tr>
+<tr><td>m8500</td><td>8492.617</td><td>250.000</td><td>12.668</td><td>nan</td><td>205.446</td><td>12.668</td><td>12.665</td><td>0.011</td><td>31190.388</td><td>151.818</td><td>31110.676</td><td>1.2964578099448763e-14</td><td>6.310464024886764e-17</td><td>1.2931445039660473e-14</td></tr>
+<tr><td>m8625</td><td>8620.801</td><td>250.000</td><td>12.698</td><td>nan</td><td>186.034</td><td>12.698</td><td>12.696</td><td>0.012</td><td>30318.277</td><td>162.972</td><td>30265.662</td><td>1.2230098871180437e-14</td><td>6.57412675912755e-17</td><td>1.2208874182704116e-14</td></tr>
+<tr><td>m8750</td><td>8745.072</td><td>250.000</td><td>12.726</td><td>nan</td><td>171.782</td><td>12.726</td><td>12.722</td><td>0.012</td><td>29584.995</td><td>172.225</td><td>29471.531</td><td>1.1597528721711906e-14</td><td>6.751325274182963e-17</td><td>1.15530500454629e-14</td></tr>
+<tr><td>m8875</td><td>8864.730</td><td>250.000</td><td>12.753</td><td>nan</td><td>152.915</td><td>12.753</td><td>12.741</td><td>0.012</td><td>29092.407</td><td>190.252</td><td>28748.377</td><td>1.1098629740775339e-14</td><td>7.258048117520959e-17</td><td>1.0967383790341948e-14</td></tr>
+</table></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdt</span><span class="o">.</span><span class="n">plot_syn_spectrum</span><span class="p">(</span><span class="n">add_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Wavelength [$\\rm \\AA$]&#39;, ylabel=&#39;Brightness [AB mag]&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_32_1.png" src="../_images/examples_simulator_32_1.png" />
+</div>
+</div>
+</section>
+<section id="Example-2:-High-z-QSO-Model">
+<h4>Example 2: High-z QSO Model<a class="headerlink" href="#Example-2:-High-z-QSO-Model" title="Link to this heading"></a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_testdata</span><span class="p">(</span><span class="s2">&quot;Highz_QSO&quot;</span><span class="p">)</span>
+<span class="n">sdt</span><span class="o">.</span><span class="n">get_synphot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_34_0.png" src="../_images/examples_simulator_34_0.png" />
+</div>
+</div>
+</section>
+<section id="Example-3:-Kilonova-spectrum">
+<h4>Example 3: Kilonova spectrum<a class="headerlink" href="#Example-3:-Kilonova-spectrum" title="Link to this heading"></a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_testdata</span><span class="p">(</span><span class="s2">&quot;AT2017gfo_2.4d&quot;</span><span class="p">)</span>
+<span class="n">sdt</span><span class="o">.</span><span class="n">get_synphot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flux_unit</span><span class="o">=</span><span class="s2">&quot;flam&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_simulator_36_0.png" src="../_images/examples_simulator_36_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tiles.html" class="btn btn-neutral float-left" title="Tiles" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api/modules.html" class="btn btn-neutral float-right" title="supy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

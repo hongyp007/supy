@@ -1,13 +1,12 @@
 Welcome to supy's documentation!
-================================
+=================================
 
-Installation
-============
+Introduction
+------------
 
-Instructions for installing supy go here.
+``supy`` is a collection of Python scripts designed to assist members of the 7-dimensional telescope survey (7DT/7DS) in their analyses. 
 
-Tutorial
-========
+It provides a suite of high-level tools tailored for 7DT/7DS data analysis, making complex tasks more accessible and efficient.
 
 .. toctree::
    :maxdepth: 3
@@ -16,11 +15,4 @@ Tutorial
    install
    examples/index
    api/modules
-
-API Reference
-=============
-
-.. automodule:: supy
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   
