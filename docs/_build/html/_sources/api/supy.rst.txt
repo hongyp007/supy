@@ -7,10 +7,12 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   supy.instrument
    supy.observer
-   supy.simulate
+   supy.simulator
    supy.tiles
+
+Submodules
+----------
 
 supy.const module
 -----------------
@@ -24,6 +26,14 @@ supy.version module
 -------------------
 
 .. automodule:: supy.version
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: supy
    :members:
    :undoc-members:
    :show-inheritance:

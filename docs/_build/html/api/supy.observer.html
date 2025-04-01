@@ -20,7 +20,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="supy.tiles package" href="supy.tiles.html" />
+    <link rel="next" title="supy.simulator package" href="supy.simulator.html" />
     <link rel="prev" title="supy package" href="supy.html" /> 
 </head>
 
@@ -51,11 +51,14 @@
 <li class="toctree-l2 current"><a class="reference internal" href="supy.html">supy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="supy.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">supy.observer package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supy.simulator.html">supy.simulator package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="supy.tiles.html">supy.tiles package</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="supy.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="supy.html#module-supy.const">supy.const module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="supy.html#module-supy.version">supy.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="supy.html#module-supy">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,6 +93,81 @@
              
   <section id="supy-observer-package">
 <h1>supy.observer package<a class="headerlink" href="#supy-observer-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-supy.observer.bumper">
+<span id="supy-observer-bumper-module"></span><h2>supy.observer.bumper module<a class="headerlink" href="#module-supy.observer.bumper" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_cached_time_to_num">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_cached_time_to_num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_conversion_cache</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_cached_time_to_num" title="Link to this definition"></a></dt>
+<dd><p>Convert time string to numeric with caching for better performance.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_date2num">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_date2num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_date2num" title="Link to this definition"></a></dt>
+<dd><p>Safely convert datetime to numeric value for plotting.
+Handles the case where date2num returns a numpy array instead of a float.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_extract_time_strings">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_extract_time_strings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altaz_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'obstime'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_extract_time_strings" title="Link to this definition"></a></dt>
+<dd><p>Directly extract time values from possibly non-iterable TimeAttribute.
+Optimized version with caching for better performance.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_extract_times">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_extract_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altaz_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'obstime'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_extract_times" title="Link to this definition"></a></dt>
+<dd><p>Directly extract time values for comparison.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_get">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_get" title="Link to this definition"></a></dt>
+<dd><p>Safely get a value from a dictionary with a default fallback.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_alt_value">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_alt_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altaz_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_get_alt_value" title="Link to this definition"></a></dt>
+<dd><p>Extract altitude value from AltAz object safely.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_attribute">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_get_attribute" title="Link to this definition"></a></dt>
+<dd><p>Extract a nested attribute safely.
+attr_path is a list like [‘alt’, ‘value’] for obj.alt.value</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_datetime">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_obj</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_get_datetime" title="Link to this definition"></a></dt>
+<dd><p>Safely extract datetime from a Time object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_separation_value">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_separation_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_get_separation_value" title="Link to this definition"></a></dt>
+<dd><p>Extract separation value safely.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_isoformat">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_isoformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_isoformat" title="Link to this definition"></a></dt>
+<dd><p>Safely extract ISO format from a Time or TimeAttribute object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="supy.observer.bumper.safe_to_list">
+<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_to_list" title="Link to this definition"></a></dt>
+<dd><p>Convert a value to a list of floats safely.</p>
+</dd></dl>
+
+</section>
 <section id="module-supy.observer.mainobserver">
 <span id="supy-observer-mainobserver-module"></span><h2>supy.observer.mainobserver module<a class="headerlink" href="#module-supy.observer.mainobserver" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -533,6 +611,32 @@ specified by the object’s <cite>_timezone</cite> attribute.</p>
 </dd></dl>
 
 </section>
+<section id="module-supy.observer.params">
+<span id="supy-observer-params-module"></span><h2>supy.observer.params module<a class="headerlink" href="#module-supy.observer.params" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="supy.observer.params.obsNightParams">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.params.</span></span><span class="sig-name descname"><span class="pre">obsNightParams</span></span><a class="headerlink" href="#supy.observer.params.obsNightParams" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to store observation night information.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="supy.observer.params.staraltParams">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.params.</span></span><span class="sig-name descname"><span class="pre">staraltParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.params.staraltParams" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.params.staraltParams.data_dict">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#supy.observer.params.staraltParams.data_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.params.staraltParams.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.params.staraltParams.get" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-supy.observer.staralt">
 <span id="supy-observer-staralt-module"></span><h2>supy.observer.staralt module<a class="headerlink" href="#module-supy.observer.staralt" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -671,103 +775,8 @@ visibility analysis for GRB observations from Chile.</p>
 </dd></dl>
 
 </section>
-<section id="module-supy.observer.bumper">
-<span id="supy-observer-bumper-module"></span><h2>supy.observer.bumper module<a class="headerlink" href="#module-supy.observer.bumper" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_cached_time_to_num">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_cached_time_to_num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_conversion_cache</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_cached_time_to_num" title="Link to this definition"></a></dt>
-<dd><p>Convert time string to numeric with caching for better performance.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_date2num">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_date2num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_date2num" title="Link to this definition"></a></dt>
-<dd><p>Safely convert datetime to numeric value for plotting.
-Handles the case where date2num returns a numpy array instead of a float.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_extract_time_strings">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_extract_time_strings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altaz_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'obstime'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_extract_time_strings" title="Link to this definition"></a></dt>
-<dd><p>Directly extract time values from possibly non-iterable TimeAttribute.
-Optimized version with caching for better performance.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_extract_times">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_extract_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altaz_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'obstime'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_extract_times" title="Link to this definition"></a></dt>
-<dd><p>Directly extract time values for comparison.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_get">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_get" title="Link to this definition"></a></dt>
-<dd><p>Safely get a value from a dictionary with a default fallback.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_alt_value">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_alt_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altaz_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_get_alt_value" title="Link to this definition"></a></dt>
-<dd><p>Extract altitude value from AltAz object safely.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_attribute">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_get_attribute" title="Link to this definition"></a></dt>
-<dd><p>Extract a nested attribute safely.
-attr_path is a list like [‘alt’, ‘value’] for obj.alt.value</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_datetime">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_obj</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_get_datetime" title="Link to this definition"></a></dt>
-<dd><p>Safely extract datetime from a Time object.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_get_separation_value">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_get_separation_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_get_separation_value" title="Link to this definition"></a></dt>
-<dd><p>Extract separation value safely.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_isoformat">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_isoformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.bumper.safe_isoformat" title="Link to this definition"></a></dt>
-<dd><p>Safely extract ISO format from a Time or TimeAttribute object.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="supy.observer.bumper.safe_to_list">
-<span class="sig-prename descclassname"><span class="pre">supy.observer.bumper.</span></span><span class="sig-name descname"><span class="pre">safe_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#supy.observer.bumper.safe_to_list" title="Link to this definition"></a></dt>
-<dd><p>Convert a value to a list of floats safely.</p>
-</dd></dl>
-
-</section>
-<section id="module-supy.observer.params">
-<span id="supy-observer-params-module"></span><h2>supy.observer.params module<a class="headerlink" href="#module-supy.observer.params" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="supy.observer.params.obsNightParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.params.</span></span><span class="sig-name descname"><span class="pre">obsNightParams</span></span><a class="headerlink" href="#supy.observer.params.obsNightParams" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class to store observation night information.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="supy.observer.params.staraltParams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.params.</span></span><span class="sig-name descname"><span class="pre">staraltParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.params.staraltParams" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.params.staraltParams.data_dict">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#supy.observer.params.staraltParams.data_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.params.staraltParams.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.params.staraltParams.get" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="module-supy.observer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-supy.observer" title="Link to this heading"></a></h2>
 </section>
 </section>
 
@@ -776,7 +785,7 @@ attr_path is a list like [‘alt’, ‘value’] for obj.alt.value</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="supy.html" class="btn btn-neutral float-left" title="supy package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="supy.tiles.html" class="btn btn-neutral float-right" title="supy.tiles package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="supy.simulator.html" class="btn btn-neutral float-right" title="supy.simulator package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

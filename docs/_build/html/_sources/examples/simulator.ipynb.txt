@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "2e61120f",
+   "id": "7bac4cfa",
    "metadata": {},
    "source": [
     "# Simulator"
@@ -11,7 +11,7 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "92fff898",
+   "id": "2691d446",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -21,7 +21,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "451e99a1",
+   "id": "9f7ec8ab",
    "metadata": {},
    "source": [
     "## Filter"
@@ -30,7 +30,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "30f1dc24",
+   "id": "5d835bc4",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -39,7 +39,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "b7e675f3",
+   "id": "ee3b6e66",
    "metadata": {},
    "source": [
     "### 7DT filterset by default"
@@ -48,7 +48,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "5b7e342d",
+   "id": "161dad8e",
    "metadata": {},
    "outputs": [
     {
@@ -79,7 +79,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "00e5c8c0",
+   "id": "0535210e",
    "metadata": {},
    "source": [
     "### SDSS filterset"
@@ -88,7 +88,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "c53ebc40",
+   "id": "4116adc8",
    "metadata": {},
    "outputs": [
     {
@@ -119,7 +119,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "99d2479a",
+   "id": "b13fb053",
    "metadata": {},
    "source": [
     "### Manual tophat filterset"
@@ -128,7 +128,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "acc26b48",
+   "id": "576124dc",
    "metadata": {},
    "outputs": [
     {
@@ -159,16 +159,16 @@
   },
   {
    "cell_type": "markdown",
-   "id": "a7825853",
+   "id": "941ee3b2",
    "metadata": {},
    "source": [
-    "## Filter info"
+    "### Filter info"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "8959907e",
+   "id": "12d5b865",
    "metadata": {},
    "outputs": [
     {
@@ -227,7 +227,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "15919bde",
+   "id": "5d8d7733",
    "metadata": {},
    "source": [
     "## Response"
@@ -236,7 +236,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "84b94f9c",
+   "id": "2b4935ca",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -245,7 +245,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "1e14f684",
+   "id": "78168d1a",
    "metadata": {},
    "source": [
     "### Optics"
@@ -254,7 +254,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "8e5271e0",
+   "id": "bd2e47ee",
    "metadata": {},
    "outputs": [
     {
@@ -284,7 +284,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "d557f5db",
+   "id": "46a0bd5b",
    "metadata": {},
    "source": [
     "### Quentum efficiency"
@@ -293,7 +293,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "7853e917",
+   "id": "aa4587fe",
    "metadata": {},
    "outputs": [
     {
@@ -323,7 +323,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "69227d2a",
+   "id": "99565949",
    "metadata": {},
    "source": [
     "### Sky transmission"
@@ -332,7 +332,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "id": "cdb076fa",
+   "id": "dba233f5",
    "metadata": {},
    "outputs": [
     {
@@ -362,7 +362,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "7bd7204b",
+   "id": "690e2112",
    "metadata": {},
    "source": [
     "## Simulator"
@@ -371,7 +371,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "id": "164ad9af",
+   "id": "eac3b4c5",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -380,7 +380,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "460718f1",
+   "id": "2e45e9cc",
    "metadata": {},
    "source": [
     "### Plot response curve"
@@ -389,7 +389,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "id": "384e0a64",
+   "id": "ac4e6b25",
    "metadata": {},
    "outputs": [
     {
@@ -427,7 +427,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "426a3001",
+   "id": "5579abc3",
    "metadata": {},
    "source": [
     "### Calculate sensitivity"
@@ -436,7 +436,7 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "633ade66",
+   "id": "52e0c281",
    "metadata": {},
    "outputs": [
     {
@@ -470,7 +470,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "c86c3350",
+   "id": "759173b0",
    "metadata": {},
    "source": [
     "#### Compare with others"
@@ -479,7 +479,7 @@
   {
    "cell_type": "code",
    "execution_count": 14,
-   "id": "e4ca891c",
+   "id": "5c14557f",
    "metadata": {},
    "outputs": [
     {
@@ -509,7 +509,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "67a82875",
+   "id": "9aaeb460",
    "metadata": {},
    "source": [
     "### Synthesize photometry"
@@ -517,7 +517,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "00d4ff2c",
+   "id": "b4162132",
    "metadata": {},
    "source": [
     "#### Example 1: Feige110"
@@ -526,7 +526,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "id": "9a561c7d",
+   "id": "9c1c425c",
    "metadata": {},
    "outputs": [
     {
@@ -558,7 +558,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "id": "1d7768b1",
+   "id": "bb9e1564",
    "metadata": {},
    "outputs": [
     {
@@ -618,7 +618,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "id": "8fc04bde",
+   "id": "9e3dfa8e",
    "metadata": {},
    "outputs": [
     {
@@ -648,7 +648,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "6faa5bd9",
+   "id": "806ab52a",
    "metadata": {},
    "source": [
     "#### Example 2: High-z QSO Model"
@@ -657,7 +657,7 @@
   {
    "cell_type": "code",
    "execution_count": 18,
-   "id": "f3275bdf",
+   "id": "ab8426a7",
    "metadata": {},
    "outputs": [
     {
@@ -678,7 +678,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "5d3abbe0",
+   "id": "f23eef41",
    "metadata": {},
    "source": [
     "#### Example 3: Kilonova spectrum"
@@ -687,7 +687,7 @@
   {
    "cell_type": "code",
    "execution_count": 19,
-   "id": "1156deed",
+   "id": "2f58035c",
    "metadata": {},
    "outputs": [
     {
