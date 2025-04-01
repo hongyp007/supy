@@ -60,8 +60,12 @@ class Tiles:
         - A table containing the overlapping or innermost tiles for each coordinate.
         """
         if loc is not None:
-            loc = np.atleast_2d(loc)
-            ra, dec = loc.T
+            try:
+                loc = np.atleast_2d(loc)
+                ra, dec = loc.T
+            except:
+                coords = [parse_coordinates(l) for l in loc]
+                ra, dec = zip(*coords)
 
         if j2000 is not None:
             list_j2000 = np.atleast_1d(j2000)
