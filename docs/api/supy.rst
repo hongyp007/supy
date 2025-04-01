@@ -12,9 +12,6 @@ Subpackages
    supy.simulate
    supy.tiles
 
-Submodules
-----------
-
 supy.const module
 -----------------
 
@@ -27,14 +24,6 @@ supy.version module
 -------------------
 
 .. automodule:: supy.version
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: supy
    :members:
    :undoc-members:
    :show-inheritance:

@@ -4,6 +4,12 @@ sys.path.insert(0, os.path.abspath('../'))  #
 
 project = 'supy'
 
-extensions = ['sphinx.ext.autodoc', 'sphinx_rtd_theme', 'nbsphinx']
+extensions = [
+	'nbsphinx',
+	'sphinx_rtd_theme', 
+	'sphinx.ext.autodoc', 
+	'sphinx.ext.napoleon',  # If using Google or NumPy style docstrings
+    'sphinx.ext.autosummary',  # Optional: Generates summary tables
+    ]
 html_theme = "sphinx_rtd_theme"
 autosummary_generate = True

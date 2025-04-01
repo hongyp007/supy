@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="supy.simulate package" href="supy.simulate.html" />
-    <link rel="prev" title="supy.instrument package" href="supy.instrument.html" /> 
+    <link rel="next" title="supy.tiles package" href="supy.tiles.html" />
+    <link rel="prev" title="supy package" href="supy.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,16 +50,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">supy</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="supy.html">supy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="supy.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="supy.instrument.html">supy.instrument package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">supy.observer package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="supy.simulate.html">supy.simulate package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="supy.tiles.html">supy.tiles package</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="supy.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="supy.html#module-supy.const">supy.const module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="supy.html#module-supy.version">supy.version module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="supy.html#module-supy">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -94,8 +90,586 @@
              
   <section id="supy-observer-package">
 <h1>supy.observer package<a class="headerlink" href="#supy-observer-package" title="Link to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<section id="module-supy.observer.mainobserver">
+<span id="supy-observer-mainobserver-module"></span><h2>supy.observer.mainobserver module<a class="headerlink" href="#module-supy.observer.mainobserver" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.mainobserver.</span></span><span class="sig-name descname"><span class="pre">mainObserver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">OBSERVER_LONGITUDE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-70.7804</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_LATITUDE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-30.4704</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_ELEVATION</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1580</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_TIMEZONE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'America/Santiago'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_NAME</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Hyeonho</span> <span class="pre">Choi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_OBSERVATORY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'7DT'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for observing astronomical objects and events from a specific location on Earth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>OBSERVER_LATITUDE</strong> (<em>1.</em>) – The latitude of the observer’s location in degrees.</p></li>
+<li><p><strong>OBSERVER_LONGITUDE</strong> (<em>2.</em>) – The longitude of the observer’s location in degrees.</p></li>
+<li><p><strong>OBSERVER_ELEVATION</strong> (<em>3.</em>) – The elevation of the observer’s location in meters.</p></li>
+<li><p><strong>OBSERVER_TIMEZONE</strong> (<em>4.</em>) – The timezone of the observer’s location, in the format ‘Area/Location’.</p></li>
+<li><p><strong>OBSERVER_NAME</strong> (<em>5.</em>) – The name of the observer.</p></li>
+<li><p><strong>OBSERVER_OBSERVATORY</strong> (<em>6.</em>) – The name of the observatory.</p></li>
+<li><p><strong>**kwargs</strong> (<em>optional</em>) – Additional keyword arguments to pass to the Observer object.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">1.</span> <span class="pre">get_obsinfo()</span> <span class="pre">-&gt;</span> <span class="pre">dict</span></span></dt>
+<dd><p>Returns a dictionary containing the observer’s information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">2.</span> <span class="pre">localtime(utctime:</span> <span class="pre">datetime</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">datetime</span></span></dt>
+<dd><p>Converts the provided UTC time to the observer’s local time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">4.</span> <span class="pre">now()</span> <span class="pre">-&gt;</span> <span class="pre">astropy.time.Time</span></span></dt>
+<dd><p>Returns the current UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">5.</span> <span class="pre">is_night(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></span></dt>
+<dd><p>Returns True if it is night at the observer’s location at the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">6.</span> <span class="pre">tonight(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">horizon:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-18)</span> <span class="pre">-&gt;</span> <span class="pre">tuple</span></span></dt>
+<dd><p>Calculates the start and end times of tonight at the observer’s location, starting from the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">7.</span> <span class="pre">sun_radec(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.coordinates.SkyCoord</span></span></dt>
+<dd><p>Calculates the RA and Dec of the Sun at the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">8.</span> <span class="pre">sun_altaz(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.coordinates.AltAz</span></span></dt>
+<dd><p>Calculates the altitude and azimuth of the Sun at the observer’s location at the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">9.</span> <span class="pre">sun_risetime(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">mode:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'nearest',</span> <span class="pre">horizon:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-18)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.time.Time</span></span></dt>
+<dd><p>Calculates the next rise time of the Sun at the observer’s location, starting from the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">10.</span> <span class="pre">sun_settime(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">mode:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'nearest',</span> <span class="pre">horizon:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-18)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.time.Time</span></span></dt>
+<dd><p>Calculates the next set time of the Sun at the observer’s location, starting from the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">11.</span> <span class="pre">moon_radec(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.coordinates.SkyCoord</span></span></dt>
+<dd><p>Calculates the RA and Dec of the Moon at the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">12.</span> <span class="pre">moon_altaz(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.coordinates.AltAz</span></span></dt>
+<dd><p>Calculates the altitude and azimuth of the Moon at the observer’s location at the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">13.</span> <span class="pre">moon_risetime(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">mode:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'nearest',</span> <span class="pre">horizon:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-18)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.time.Time</span></span></dt>
+<dd><p>Calculates the next rise time of the Moon at the observer’s location, starting from the provided UTC time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">14.</span> <span class="pre">moon_settime(time:</span> <span class="pre">datetime</span> <span class="pre">or</span> <span class="pre">Time</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">mode:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'nearest',</span> <span class="pre">horizon:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">-18)</span> <span class="pre">-&gt;</span> <span class="pre">astropy.time.Time</span></span></dt>
+<dd><p>Calculates the next set time of the Moon at the observer’s location, starting from the</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.get_status" title="Link to this definition"></a></dt>
+<dd><p>Returns observation information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>1. obsinfo</strong> – A dictionary containing the following keys and values:
+- update_time: The UTC time at which the observation information was last updated, in ISO format.
+- name_observatory: The name of the observatory.
+- name_observer: The name of the observer.
+- latitude: The latitude of the observatory in degrees.
+- longitude: The longitude of the observatory in degrees.
+- elevation: The elevation of the observatory in meters.
+- timezone: The timezone of the observatory in hours relative to UTC.
+- observer: The astropy.coordinates.EarthLocation object representing the observer’s location.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.is_night">
+<span class="sig-name descname"><span class="pre">is_night</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.is_night" title="Link to this definition"></a></dt>
+<dd><p>Check if it is night at a given UTC time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to check if it is night. If not provided, the current time is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. is_night</strong> – True if it is night at the given time and location, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.localtime">
+<span class="sig-name descname"><span class="pre">localtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.localtime" title="Link to this definition"></a></dt>
+<dd><p>Returns the datetime object representing the corresponding local time in the timezone
+specified by the object’s <cite>_timezone</cite> attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>utctime</strong> (<em>1.</em>) – The datetime object representing the time to convert to local time. If not provided,
+the current UTC time will be used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. localtime</strong> – The datetime object representing the corresponding local time in the timezone
+specified by the object’s <cite>_timezone</cite> attribute.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_altaz">
+<span class="sig-name descname"><span class="pre">moon_altaz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_altaz" title="Link to this definition"></a></dt>
+<dd><p>Calculates the altitude and azimuth of the Moon at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the altitude and azimuth of the Moon. If not provided, the current time is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. moon_altaz</strong> – The altitude and azimuth of the Moon at the given time and location, as an AltAz object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.coordinates.AltAz</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_phase">
+<span class="sig-name descname"><span class="pre">moon_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_phase" title="Link to this definition"></a></dt>
+<dd><p>Calculates the phase of the Moon at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the phase of the Moon. If not provided, the current time is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. k</strong> – Fraction of moon illuminated</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_radec">
+<span class="sig-name descname"><span class="pre">moon_radec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_radec" title="Link to this definition"></a></dt>
+<dd><p>Calculates the RA and Dec of the Moon at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the RA and Dec of the Moon. If not provided, the current time is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. moon_radec</strong> – The RA and Dec of the Moon at the given time, as a SkyCoord object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.coordinates.SkyCoord</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_risetime">
+<span class="sig-name descname"><span class="pre">moon_risetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_risetime" title="Link to this definition"></a></dt>
+<dd><p>Calculates the next rise time of the Moon at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the next rise time of the Moon. If not provided, the current time is used.</p></li>
+<li><p><strong>mode</strong> (<em>2.</em>) – The method to use for calculating the rise time of the Moon. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p></li>
+<li><p><strong>horizon</strong> (<em>3.</em>) – The horizon angle to use when calculating the rise time of the Moon. Default is -18 degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. moon_rise_time</strong> – The next rise time of the Moon at the given time and location, as a Time object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.time.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_settime">
+<span class="sig-name descname"><span class="pre">moon_settime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_settime" title="Link to this definition"></a></dt>
+<dd><p>Calculates the next set time of the Moon at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the next set time of the Moon. If not provided, the current time is used.</p></li>
+<li><p><strong>mode</strong> (<em>2.</em>) – The method to use for calculating the set time of the Moon. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p></li>
+<li><p><strong>horizon</strong> (<em>3.</em>) – The horizon angle to use when calculating the set time of the Moon. Default is -18 degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. moon_set_time</strong> – The next set time of the Moon at the given time and location, as a Time object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.time.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.now">
+<span class="sig-name descname"><span class="pre">now</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.now" title="Link to this definition"></a></dt>
+<dd><p>Get the current UTC time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>1. time</strong> – The current UTC time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>astropy.time.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.risetime">
+<span class="sig-name descname"><span class="pre">risetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'next'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.risetime" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radec</strong> (<em>SkyCoord = Target</em><em>(</em><em>RADec</em><em>) </em><em>coordinates to calculate hourangle</em>)</p></li>
+<li><p><strong>utctime</strong> (<em>datetime.datetime</em><em> or </em><em>Time = Time</em><em>(</em><em>default = Now</em><em>)</em>)</p></li>
+<li><p><strong>mode</strong> (<em>{‘next’</em><em>, </em><em>‘previous’</em><em>, </em><em>‘nearest’}</em><em>(</em><em>default = next</em><em>)</em>)</p></li>
+<li><p><strong>horizon</strong> (<em>float = horizon angle in degree</em><em>(</em><em>default = -18</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>risetime</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Time = Target risetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.settime">
+<span class="sig-name descname"><span class="pre">settime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.settime" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radec</strong> (<em>SkyCoord = Target</em><em>(</em><em>RADec</em><em>) </em><em>coordinates to calculate hourangle</em>)</p></li>
+<li><p><strong>utctime</strong> (<em>datetime.datetime</em><em> or </em><em>Time = Time</em><em>(</em><em>default = Now</em><em>)</em>)</p></li>
+<li><p><strong>mode</strong> (<em>{‘next’</em><em>, </em><em>‘previous’</em><em>, </em><em>‘nearest’}</em><em>(</em><em>default = nearest</em><em>)</em>)</p></li>
+<li><p><strong>horizon</strong> (<em>float = horizon angle in degree</em><em>(</em><em>default = -18</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>settime</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Time = Target settime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_altaz">
+<span class="sig-name descname"><span class="pre">sun_altaz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_altaz" title="Link to this definition"></a></dt>
+<dd><p>Calculates the altitude and azimuth of the Sun at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the altitude and azimuth of the Sun. If not provided, the current time is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. sun_altaz</strong> – The altitude and azimuth of the Sun at the given time and location, as an AltAz object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.coordinates.AltAz</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_radec">
+<span class="sig-name descname"><span class="pre">sun_radec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_radec" title="Link to this definition"></a></dt>
+<dd><p>Get the RA and Dec of the Sun at a given UTC time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the RA and Dec of the Sun. If not provided, the current time is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. sun_radec</strong> – The RA and Dec of the Sun at the given time, as a SkyCoord object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.coordinates.SkyCoord</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_risetime">
+<span class="sig-name descname"><span class="pre">sun_risetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_risetime" title="Link to this definition"></a></dt>
+<dd><p>Calculates the next rise time of the Sun at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the next rise time of the Sun. If not provided, the current time is used.</p></li>
+<li><p><strong>mode</strong> (<em>2.</em>) – The method to use for calculating the rise time of the Sun. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p></li>
+<li><p><strong>horizon</strong> (<em>3.</em>) – The horizon angle to use when calculating the rise time of the Sun. Default is -18 degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. sun_rise_time</strong> – The next rise time of the Sun at the given time and location, as a Time object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.time.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_settime">
+<span class="sig-name descname"><span class="pre">sun_settime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_settime" title="Link to this definition"></a></dt>
+<dd><p>Calculates the next set time of the Sun at the given time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to calculate the next set time of the Sun. If not provided, the current time is used.</p></li>
+<li><p><strong>mode</strong> (<em>2.</em>) – The method to use for calculating the set time of the Sun. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p></li>
+<li><p><strong>horizon</strong> (<em>3.</em>) – The horizon angle to use when calculating the set time of the Sun. Default is -18 degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. sun_set_time</strong> – The next set time of the Sun at the given time and location, as a Time object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>astropy.time.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.to_altaz">
+<span class="sig-name descname"><span class="pre">to_altaz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.to_altaz" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radec</strong> (<em>SkyCoord = Target</em><em>(</em><em>RADec</em><em>) </em><em>coordinates to convert AltAz</em>)</p></li>
+<li><p><strong>utctime</strong> (<em>datetime.datetime</em><em> or </em><em>Time = Time</em><em>(</em><em>default = Now</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>coordinate</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SkyCoord = AltAz coordinate of the target</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.to_radec">
+<span class="sig-name descname"><span class="pre">to_radec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">az</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.to_radec" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radec</strong> (<em>SkyCoord = Target</em><em>(</em><em>AltAz</em><em>) </em><em>coordinates to convert RADec</em>)</p></li>
+<li><p><strong>utctime</strong> (<em>datetime.datetime</em><em> or </em><em>Time = Time</em><em>(</em><em>default = Now</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>coordinate</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SkyCoord = RADec coordinate of the target</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.tonight">
+<span class="sig-name descname"><span class="pre">tonight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.tonight" title="Link to this definition"></a></dt>
+<dd><p>Get the start and end times of tonight at a given UTC time and location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> (<em>1.</em>) – The UTC time at which to start the calculation of the start and end of tonight. If not provided, the current time is used.</p></li>
+<li><p><strong>horizon</strong> (<em>2.</em>) – The horizon angle to use when calculating the start and end of tonight. Default is -18 degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>1. tonight</strong> – A tuple of two astropy.time.Time objects representing the start and end times of tonight at the given time and location.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-supy.observer.staralt">
+<span id="supy-observer-staralt-module"></span><h2>supy.observer.staralt module<a class="headerlink" href="#module-supy.observer.staralt" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.staralt.</span></span><span class="sig-name descname"><span class="pre">Staralt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#supy.observer.mainobserver.mainObserver" title="supy.observer.mainobserver.mainObserver"><span class="pre">mainObserver</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.staralt.Staralt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to handle star altitude plots.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.data_dict">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#supy.observer.params.staraltParams" title="supy.observer.params.staraltParams"><span class="pre">staraltParams</span></a></em><a class="headerlink" href="#supy.observer.staralt.Staralt.data_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.is_observable">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_observable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.is_observable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.min_max_obstime">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_max_obstime</span></span><a class="headerlink" href="#supy.observer.staralt.Staralt.min_max_obstime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.next_observable_night">
+<span class="sig-name descname"><span class="pre">next_observable_night</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_days</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.staralt.Staralt.next_observable_night" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.objname">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">objname</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.objname" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.observer">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#supy.observer.mainobserver.mainObserver" title="supy.observer.mainobserver.mainObserver"><span class="pre">mainObserver</span></a></em><a class="headerlink" href="#supy.observer.staralt.Staralt.observer" title="Link to this definition"></a></dt>
+<dd><p>Get the observer object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.plot_staralt">
+<span class="sig-name descname"><span class="pre">plot_staralt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_current_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#supy.observer.staralt.Staralt.plot_staralt" title="Link to this definition"></a></dt>
+<dd><p>Plot the altitude data from the dictionary returned by set_target().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em><em>, </em><em>optional</em>) – The dictionary containing data required for plotting.</p></li>
+<li><p><strong>show_current_time</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to show the current time marker on the plot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.set_target">
+<span class="sig-name descname"><span class="pre">set_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_shift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_minalt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_minmoonsep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#supy.observer.staralt.Staralt.set_target" title="Link to this definition"></a></dt>
+<dd><p>Generate the data needed for the altitude plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ra</strong> (<em>float</em><em> or </em><em>str</em>) – Right Ascension of the target in degrees (float) or in hms format (str).</p></li>
+<li><p><strong>dec</strong> (<em>float</em><em> or </em><em>str</em>) – Declination of the target in degrees (float) or in dms format (str).</p></li>
+<li><p><strong>time_shift</strong> (<em>int</em>)</p></li>
+<li><p><strong>objname</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the target object.</p></li>
+<li><p><strong>utctime</strong> (<em>datetime</em><em> or </em><em>Time</em><em>, </em><em>optional</em>) – The reference time. If None, current time is used.</p></li>
+<li><p><strong>target_minalt</strong> (<em>float</em><em>, </em><em>optional</em>) – The minimum allowable altitude for observation (in degrees).</p></li>
+<li><p><strong>target_minmoonsep</strong> (<em>float</em><em>, </em><em>optional</em>) – The minimum allowable moon separation (in degrees).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing all data required for plotting.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.target_altaz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target_altaz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AltAz</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.target_altaz" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.target_coord">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target_coord</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SkyCoord</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.target_coord" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.utctime">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">utctime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Time</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.utctime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-supy.observer.visibility_plotter">
+<span id="supy-observer-visibility-plotter-module"></span><h2>supy.observer.visibility_plotter module<a class="headerlink" href="#module-supy.observer.visibility_plotter" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="supy.observer.visibility_plotter.VisibilityPlotter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.visibility_plotter.</span></span><span class="sig-name descname"><span class="pre">VisibilityPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.visibility_plotter.VisibilityPlotter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handle visibility plot generation and Slack uploading for GCN notices.</p>
+<p>This class creates visibility plots using staralt.py and handles
+temporary file management for uploading to Slack. It provides specialized
+visibility analysis for GRB observations from Chile.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.visibility_plotter.VisibilityPlotter.create_visibility_plot">
+<span class="sig-name descname"><span class="pre">create_visibility_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grb_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minalt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minmoonsep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.visibility_plotter.VisibilityPlotter.create_visibility_plot" title="Link to this definition"></a></dt>
+<dd><p>Create a visibility plot for given coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ra</strong> – Right Ascension in degrees</p></li>
+<li><p><strong>dec</strong> – Declination in degrees</p></li>
+<li><p><strong>grb_name</strong> – Name of the GRB for plot title</p></li>
+<li><p><strong>test_mode</strong> – If True, save plot to test_plots directory instead of temp file</p></li>
+<li><p><strong>minalt</strong> – Minimum altitude for target in degrees</p></li>
+<li><p><strong>minmoonsep</strong> – Minimum moon separation for target in degrees</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(path_to_plot_file, visibility_info) or (None, visibility_info) if not observable</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="supy.observer.visibility_plotter.VisibilityPlotter.format_visibility_message">
+<span class="sig-name descname"><span class="pre">format_visibility_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visibility_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#supy.observer.visibility_plotter.VisibilityPlotter.format_visibility_message" title="Link to this definition"></a></dt>
+<dd><p>Format visibility information into a structured message for Slack.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-supy.observer.bumper">
 <span id="supy-observer-bumper-module"></span><h2>supy.observer.bumper module<a class="headerlink" href="#module-supy.observer.bumper" title="Link to this heading"></a></h2>
@@ -169,572 +743,6 @@ attr_path is a list like [‘alt’, ‘value’] for obj.alt.value</p>
 </dd></dl>
 
 </section>
-<section id="module-supy.observer.mainobserver">
-<span id="supy-observer-mainobserver-module"></span><h2>supy.observer.mainobserver module<a class="headerlink" href="#module-supy.observer.mainobserver" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.mainobserver.</span></span><span class="sig-name descname"><span class="pre">mainObserver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">OBSERVER_LONGITUDE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-70.7804</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_LATITUDE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-30.4704</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_ELEVATION</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1580</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_TIMEZONE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'America/Santiago'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_NAME</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Hyeonho</span> <span class="pre">Choi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OBSERVER_OBSERVATORY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'7DT'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class for observing astronomical objects and events from a specific location on Earth.</p>
-<section id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>OBSERVER_LATITUDE<span class="classifier">str</span></dt><dd><p>The latitude of the observer’s location in degrees.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>OBSERVER_LONGITUDE<span class="classifier">str</span></dt><dd><p>The longitude of the observer’s location in degrees.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>OBSERVER_ELEVATION<span class="classifier">str</span></dt><dd><p>The elevation of the observer’s location in meters.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>OBSERVER_TIMEZONE<span class="classifier">str</span></dt><dd><p>The timezone of the observer’s location, in the format ‘Area/Location’.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>OBSERVER_NAME<span class="classifier">str, optional</span></dt><dd><p>The name of the observer.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>OBSERVER_OBSERVATORY<span class="classifier">str, optional</span></dt><dd><p>The name of the observatory.</p>
-</dd>
-</dl>
-</li>
-</ol>
-<dl class="simple">
-<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs<span class="classifier">optional</span></dt><dd><p>Additional keyword arguments to pass to the Observer object.</p>
-</dd>
-</dl>
-</section>
-<section id="methods">
-<h3>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>get_obsinfo() -&gt; dict</dt><dd><p>Returns a dictionary containing the observer’s information.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>localtime(utctime: datetime = None) -&gt; datetime</dt><dd><p>Converts the provided UTC time to the observer’s local time.</p>
-</dd>
-</dl>
-</li>
-</ol>
-<ol class="arabic simple" start="4">
-<li><dl class="simple">
-<dt>now() -&gt; astropy.time.Time</dt><dd><p>Returns the current UTC time.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>is_night(time: datetime or Time = None) -&gt; bool</dt><dd><p>Returns True if it is night at the observer’s location at the provided UTC time.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tonight(time: datetime or Time = None, horizon: float = -18) -&gt; tuple</dt><dd><p>Calculates the start and end times of tonight at the observer’s location, starting from the provided UTC time.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>sun_radec(time: datetime or Time = None) -&gt; astropy.coordinates.SkyCoord</dt><dd><p>Calculates the RA and Dec of the Sun at the provided UTC time.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>sun_altaz(time: datetime or Time = None) -&gt; astropy.coordinates.AltAz</dt><dd><p>Calculates the altitude and azimuth of the Sun at the observer’s location at the provided UTC time.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>sun_risetime(time: datetime or Time = None, mode: str = ‘nearest’, horizon: float = -18) -&gt; astropy.time.Time</dt><dd><p>Calculates the next rise time of the Sun at the observer’s location, starting from the provided UTC time.</p>
-</dd>
-</dl>
-</li>
-<li><p>sun_settime(time: datetime or Time = None, mode: str = ‘nearest’, horizon: float = -18) -&gt; astropy.time.Time
-Calculates the next set time of the Sun at the observer’s location, starting from the provided UTC time.</p></li>
-<li><p>moon_radec(time: datetime or Time = None) -&gt; astropy.coordinates.SkyCoord
-Calculates the RA and Dec of the Moon at the provided UTC time.</p></li>
-<li><p>moon_altaz(time: datetime or Time = None) -&gt; astropy.coordinates.AltAz
-Calculates the altitude and azimuth of the Moon at the observer’s location at the provided UTC time.</p></li>
-<li><p>moon_risetime(time: datetime or Time = None, mode: str = ‘nearest’, horizon: float = -18) -&gt; astropy.time.Time
-Calculates the next rise time of the Moon at the observer’s location, starting from the provided UTC time.</p></li>
-<li><p>moon_settime(time: datetime or Time = None, mode: str = ‘nearest’, horizon: float = -18) -&gt; astropy.time.Time
-Calculates the next set time of the Moon at the observer’s location, starting from the</p></li>
-</ol>
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.get_status">
-<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.get_status" title="Link to this definition"></a></dt>
-<dd><p>Returns observation information.</p>
-<section id="returns">
-<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>obsinfo<span class="classifier">dict</span></dt><dd><p>A dictionary containing the following keys and values:
-- update_time: The UTC time at which the observation information was last updated, in ISO format.
-- name_observatory: The name of the observatory.
-- name_observer: The name of the observer.
-- latitude: The latitude of the observatory in degrees.
-- longitude: The longitude of the observatory in degrees.
-- elevation: The elevation of the observatory in meters.
-- timezone: The timezone of the observatory in hours relative to UTC.
-- observer: The astropy.coordinates.EarthLocation object representing the observer’s location.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.is_night">
-<span class="sig-name descname"><span class="pre">is_night</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.is_night" title="Link to this definition"></a></dt>
-<dd><p>Check if it is night at a given UTC time and location.</p>
-<section id="id3">
-<h4>Parameters<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to check if it is night. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id4">
-<h4>Returns<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>is_night<span class="classifier">bool</span></dt><dd><p>True if it is night at the given time and location, False otherwise.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.localtime">
-<span class="sig-name descname"><span class="pre">localtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.localtime" title="Link to this definition"></a></dt>
-<dd><p>Returns the datetime object representing the corresponding local time in the timezone 
-specified by the object’s <cite>_timezone</cite> attribute.</p>
-<section id="id5">
-<h4>Parameters<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>utctime<span class="classifier">datetime, optional</span></dt><dd><p>The datetime object representing the time to convert to local time. If not provided,
-the current UTC time will be used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id6">
-<h4>Returns<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>localtime<span class="classifier">datetime</span></dt><dd><p>The datetime object representing the corresponding local time in the timezone 
-specified by the object’s <cite>_timezone</cite> attribute.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_altaz">
-<span class="sig-name descname"><span class="pre">moon_altaz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_altaz" title="Link to this definition"></a></dt>
-<dd><p>Calculates the altitude and azimuth of the Moon at the given time and location.</p>
-<section id="id7">
-<h4>Parameters<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the altitude and azimuth of the Moon. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id8">
-<h4>Returns<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>moon_altaz<span class="classifier">astropy.coordinates.AltAz</span></dt><dd><p>The altitude and azimuth of the Moon at the given time and location, as an AltAz object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_phase">
-<span class="sig-name descname"><span class="pre">moon_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_phase" title="Link to this definition"></a></dt>
-<dd><p>Calculates the phase of the Moon at the given time and location.</p>
-<section id="id9">
-<h4>Parameters<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the phase of the Moon. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id10">
-<h4>Returns<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>k<span class="classifier">float</span></dt><dd><p>Fraction of moon illuminated</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_radec">
-<span class="sig-name descname"><span class="pre">moon_radec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_radec" title="Link to this definition"></a></dt>
-<dd><p>Calculates the RA and Dec of the Moon at the given time and location.</p>
-<section id="id11">
-<h4>Parameters<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the RA and Dec of the Moon. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id12">
-<h4>Returns<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>moon_radec<span class="classifier">astropy.coordinates.SkyCoord</span></dt><dd><p>The RA and Dec of the Moon at the given time, as a SkyCoord object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_risetime">
-<span class="sig-name descname"><span class="pre">moon_risetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_risetime" title="Link to this definition"></a></dt>
-<dd><p>Calculates the next rise time of the Moon at the given time and location.</p>
-<section id="id13">
-<h4>Parameters<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the next rise time of the Moon. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>mode<span class="classifier">str, optional</span></dt><dd><p>The method to use for calculating the rise time of the Moon. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>horizon<span class="classifier">float, optional</span></dt><dd><p>The horizon angle to use when calculating the rise time of the Moon. Default is -18 degrees.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id14">
-<h4>Returns<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>moon_rise_time<span class="classifier">astropy.time.Time</span></dt><dd><p>The next rise time of the Moon at the given time and location, as a Time object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.moon_settime">
-<span class="sig-name descname"><span class="pre">moon_settime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.moon_settime" title="Link to this definition"></a></dt>
-<dd><p>Calculates the next set time of the Moon at the given time and location.</p>
-<section id="id15">
-<h4>Parameters<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the next set time of the Moon. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>mode<span class="classifier">str, optional</span></dt><dd><p>The method to use for calculating the set time of the Moon. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>horizon<span class="classifier">float, optional</span></dt><dd><p>The horizon angle to use when calculating the set time of the Moon. Default is -18 degrees.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id16">
-<h4>Returns<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>moon_set_time<span class="classifier">astropy.time.Time</span></dt><dd><p>The next set time of the Moon at the given time and location, as a Time object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.now">
-<span class="sig-name descname"><span class="pre">now</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.now" title="Link to this definition"></a></dt>
-<dd><p>Get the current UTC time.</p>
-<section id="id17">
-<h4>Returns<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">astropy.time.Time</span></dt><dd><p>The current UTC time.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.risetime">
-<span class="sig-name descname"><span class="pre">risetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'next'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.risetime" title="Link to this definition"></a></dt>
-<dd><section id="id18">
-<h4>Parameters<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
-<p>radec : SkyCoord = Target(RADec) coordinates to calculate hourangle
-utctime : datetime.datetime or Time = Time(default = Now)
-mode : {‘next’, ‘previous’, ‘nearest’}(default = next)
-horizon : float = horizon angle in degree(default = -18)</p>
-</section>
-<section id="return">
-<h4>Return<a class="headerlink" href="#return" title="Link to this heading"></a></h4>
-<p>risetime : Time = Target risetime</p>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.settime">
-<span class="sig-name descname"><span class="pre">settime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.settime" title="Link to this definition"></a></dt>
-<dd><section id="id19">
-<h4>Parameters<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
-<p>radec : SkyCoord = Target(RADec) coordinates to calculate hourangle
-utctime : datetime.datetime or Time = Time(default = Now)
-mode : {‘next’, ‘previous’, ‘nearest’}(default = nearest)
-horizon : float = horizon angle in degree(default = -18)</p>
-</section>
-<section id="id20">
-<h4>Return<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
-<p>settime : Time = Target settime</p>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_altaz">
-<span class="sig-name descname"><span class="pre">sun_altaz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_altaz" title="Link to this definition"></a></dt>
-<dd><p>Calculates the altitude and azimuth of the Sun at the given time and location.</p>
-<section id="id21">
-<h4>Parameters<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the altitude and azimuth of the Sun. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id22">
-<h4>Returns<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>sun_altaz<span class="classifier">astropy.coordinates.AltAz</span></dt><dd><p>The altitude and azimuth of the Sun at the given time and location, as an AltAz object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_radec">
-<span class="sig-name descname"><span class="pre">sun_radec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_radec" title="Link to this definition"></a></dt>
-<dd><p>Get the RA and Dec of the Sun at a given UTC time.</p>
-<section id="id23">
-<h4>Parameters<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the RA and Dec of the Sun. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id24">
-<h4>Returns<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>sun_radec<span class="classifier">astropy.coordinates.SkyCoord</span></dt><dd><p>The RA and Dec of the Sun at the given time, as a SkyCoord object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_risetime">
-<span class="sig-name descname"><span class="pre">sun_risetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_risetime" title="Link to this definition"></a></dt>
-<dd><p>Calculates the next rise time of the Sun at the given time and location.</p>
-<section id="id25">
-<h4>Parameters<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the next rise time of the Sun. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>mode<span class="classifier">str, optional</span></dt><dd><p>The method to use for calculating the rise time of the Sun. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>horizon<span class="classifier">float, optional</span></dt><dd><p>The horizon angle to use when calculating the rise time of the Sun. Default is -18 degrees.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id26">
-<h4>Returns<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>sun_rise_time<span class="classifier">astropy.time.Time</span></dt><dd><p>The next rise time of the Sun at the given time and location, as a Time object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.sun_settime">
-<span class="sig-name descname"><span class="pre">sun_settime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utctimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nearest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.sun_settime" title="Link to this definition"></a></dt>
-<dd><p>Calculates the next set time of the Sun at the given time and location.</p>
-<section id="id27">
-<h4>Parameters<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to calculate the next set time of the Sun. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>mode<span class="classifier">str, optional</span></dt><dd><p>The method to use for calculating the set time of the Sun. Can be either ‘nearest’ (default), ‘next’, or ‘previous’.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>horizon<span class="classifier">float, optional</span></dt><dd><p>The horizon angle to use when calculating the set time of the Sun. Default is -18 degrees.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id28">
-<h4>Returns<a class="headerlink" href="#id28" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>sun_set_time<span class="classifier">astropy.time.Time</span></dt><dd><p>The next set time of the Sun at the given time and location, as a Time object.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.to_altaz">
-<span class="sig-name descname"><span class="pre">to_altaz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.to_altaz" title="Link to this definition"></a></dt>
-<dd><section id="id29">
-<h4>Parameters<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
-<p>radec : SkyCoord = Target(RADec) coordinates to convert AltAz
-utctime : datetime.datetime or Time = Time(default = Now)</p>
-</section>
-<section id="id30">
-<h4>Return<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
-<p>coordinate : SkyCoord = AltAz coordinate of the target</p>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.to_radec">
-<span class="sig-name descname"><span class="pre">to_radec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">az</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.to_radec" title="Link to this definition"></a></dt>
-<dd><section id="id31">
-<h4>Parameters<a class="headerlink" href="#id31" title="Link to this heading"></a></h4>
-<p>radec : SkyCoord = Target(AltAz) coordinates to convert RADec
-utctime : datetime.datetime or Time = Time(default = Now)</p>
-</section>
-<section id="id32">
-<h4>Return<a class="headerlink" href="#id32" title="Link to this heading"></a></h4>
-<p>coordinate : SkyCoord = RADec coordinate of the target</p>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.mainobserver.mainObserver.tonight">
-<span class="sig-name descname"><span class="pre">tonight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.mainobserver.mainObserver.tonight" title="Link to this definition"></a></dt>
-<dd><p>Get the start and end times of tonight at a given UTC time and location.</p>
-<section id="id33">
-<h4>Parameters<a class="headerlink" href="#id33" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>time<span class="classifier">datetime or Time, optional</span></dt><dd><p>The UTC time at which to start the calculation of the start and end of tonight. If not provided, the current time is used.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>horizon<span class="classifier">float, optional</span></dt><dd><p>The horizon angle to use when calculating the start and end of tonight. Default is -18 degrees.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-<section id="id34">
-<h4>Returns<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>tonight<span class="classifier">tuple</span></dt><dd><p>A tuple of two astropy.time.Time objects representing the start and end times of tonight at the given time and location.</p>
-</dd>
-</dl>
-</li>
-</ol>
-</section>
-</dd></dl>
-
-</section>
-</dd></dl>
-
-</section>
 <section id="module-supy.observer.params">
 <span id="supy-observer-params-module"></span><h2>supy.observer.params module<a class="headerlink" href="#module-supy.observer.params" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -761,157 +769,14 @@ utctime : datetime.datetime or Time = Time(default = Now)</p>
 </dd></dl>
 
 </section>
-<section id="module-supy.observer.staralt">
-<span id="supy-observer-staralt-module"></span><h2>supy.observer.staralt module<a class="headerlink" href="#module-supy.observer.staralt" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.staralt.</span></span><span class="sig-name descname"><span class="pre">Staralt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#supy.observer.mainobserver.mainObserver" title="supy.observer.mainobserver.mainObserver"><span class="pre">mainObserver</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.staralt.Staralt" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class to handle star altitude plots.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.data_dict">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#supy.observer.params.staraltParams" title="supy.observer.params.staraltParams"><span class="pre">staraltParams</span></a></em><a class="headerlink" href="#supy.observer.staralt.Staralt.data_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.is_observable">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_observable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.is_observable" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.min_max_obstime">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_max_obstime</span></span><a class="headerlink" href="#supy.observer.staralt.Staralt.min_max_obstime" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.next_observable_night">
-<span class="sig-name descname"><span class="pre">next_observable_night</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_days</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.staralt.Staralt.next_observable_night" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.objname">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">objname</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.objname" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.observer">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#supy.observer.mainobserver.mainObserver" title="supy.observer.mainobserver.mainObserver"><span class="pre">mainObserver</span></a></em><a class="headerlink" href="#supy.observer.staralt.Staralt.observer" title="Link to this definition"></a></dt>
-<dd><p>Get the observer object.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.plot_staralt">
-<span class="sig-name descname"><span class="pre">plot_staralt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_current_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#supy.observer.staralt.Staralt.plot_staralt" title="Link to this definition"></a></dt>
-<dd><p>Plot the altitude data from the dictionary returned by set_target().</p>
-<section id="id35">
-<h3>Parameters<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
-<dl class="simple">
-<dt>data<span class="classifier">dict, optional</span></dt><dd><p>The dictionary containing data required for plotting.</p>
-</dd>
-<dt>show_current_time<span class="classifier">bool, optional</span></dt><dd><p>Whether to show the current time marker on the plot.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.set_target">
-<span class="sig-name descname"><span class="pre">set_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utctime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Time</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_shift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_minalt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_minmoonsep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#supy.observer.staralt.Staralt.set_target" title="Link to this definition"></a></dt>
-<dd><p>Generate the data needed for the altitude plot.</p>
-<section id="id36">
-<h3>Parameters<a class="headerlink" href="#id36" title="Link to this heading"></a></h3>
-<dl class="simple">
-<dt>ra<span class="classifier">float or str</span></dt><dd><p>Right Ascension of the target in degrees (float) or in hms format (str).</p>
-</dd>
-<dt>dec<span class="classifier">float or str</span></dt><dd><p>Declination of the target in degrees (float) or in dms format (str).</p>
-</dd>
-</dl>
-<p>time_shift: int</p>
-<dl class="simple">
-<dt>objname<span class="classifier">str, optional</span></dt><dd><p>Name of the target object.</p>
-</dd>
-<dt>utctime<span class="classifier">datetime or Time, optional</span></dt><dd><p>The reference time. If None, current time is used.</p>
-</dd>
-<dt>target_minalt<span class="classifier">float, optional</span></dt><dd><p>The minimum allowable altitude for observation (in degrees).</p>
-</dd>
-<dt>target_minmoonsep<span class="classifier">float, optional</span></dt><dd><p>The minimum allowable moon separation (in degrees).</p>
-</dd>
-</dl>
-</section>
-<section id="id37">
-<h3>Returns<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
-<dl class="simple">
-<dt>dict</dt><dd><p>A dictionary containing all data required for plotting.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.target_altaz">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target_altaz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AltAz</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.target_altaz" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.target_coord">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target_coord</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SkyCoord</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.target_coord" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="supy.observer.staralt.Staralt.utctime">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">utctime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Time</span></em><a class="headerlink" href="#supy.observer.staralt.Staralt.utctime" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-supy.observer.visibility_plotter">
-<span id="supy-observer-visibility-plotter-module"></span><h2>supy.observer.visibility_plotter module<a class="headerlink" href="#module-supy.observer.visibility_plotter" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="supy.observer.visibility_plotter.VisibilityPlotter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">supy.observer.visibility_plotter.</span></span><span class="sig-name descname"><span class="pre">VisibilityPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.visibility_plotter.VisibilityPlotter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Handle visibility plot generation and Slack uploading for GCN notices.</p>
-<p>This class creates visibility plots using staralt.py and handles 
-temporary file management for uploading to Slack. It provides specialized
-visibility analysis for GRB observations from Chile.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.visibility_plotter.VisibilityPlotter.create_visibility_plot">
-<span class="sig-name descname"><span class="pre">create_visibility_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grb_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minalt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minmoonsep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#supy.observer.visibility_plotter.VisibilityPlotter.create_visibility_plot" title="Link to this definition"></a></dt>
-<dd><p>Create a visibility plot for given coordinates.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>ra: Right Ascension in degrees
-dec: Declination in degrees
-grb_name: Name of the GRB for plot title
-test_mode: If True, save plot to test_plots directory instead of temp file
-minalt: Minimum altitude for target in degrees
-minmoonsep: Minimum moon separation for target in degrees</p>
-</dd>
-<dt>Returns:</dt><dd><p>tuple: (path_to_plot_file, visibility_info) or (None, visibility_info) if not observable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="supy.observer.visibility_plotter.VisibilityPlotter.format_visibility_message">
-<span class="sig-name descname"><span class="pre">format_visibility_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visibility_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#supy.observer.visibility_plotter.VisibilityPlotter.format_visibility_message" title="Link to this definition"></a></dt>
-<dd><p>Format visibility information into a structured message for Slack.</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-supy.observer">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-supy.observer" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="supy.instrument.html" class="btn btn-neutral float-left" title="supy.instrument package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="supy.simulate.html" class="btn btn-neutral float-right" title="supy.simulate package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="supy.html" class="btn btn-neutral float-left" title="supy package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="supy.tiles.html" class="btn btn-neutral float-right" title="supy.tiles package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
