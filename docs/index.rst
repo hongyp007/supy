@@ -28,7 +28,7 @@ The following tutorials are generated from Jupyter Notebooks in `docs/examples/`
 API Reference
 =============
 
-.. automodule:: gppy
+.. automodule:: supy
    :members:
    :undoc-members:
    :show-inheritance:

@@ -10,7 +10,7 @@ from astropy.table import Table
 from datetime import datetime
 from astropy.table import vstack
 from typing import List, Union
-
+from .coord import parse_coordinates
 
 class Tiles:
     def __init__(self, tile_path: str = None):
@@ -22,16 +22,30 @@ class Tiles:
         self.tbl_RIS = None
         self.coords_RIS = None
 
+    @property
+    def target_table(self):
+        if not(hasattr(self, '_target_table')):
+            print("Target table not produced. Run find_overlapping_tiles first.")
+            return None
+        return self._target_table
+    
+    @property
+    def tile_table(self):
+        if not(hasattr(self, '_tile_table')):
+            print("Tile table not produced. Run find_overlapping_tiles first.")
+            return None
+        return self._tile_table
+    
     def find_overlapping_tiles(self, 
-                            list_ra=None, 
-                            list_dec=None, 
-                            list_j2000=None,
-                            list_aperture= 0,
-                            visualize: bool = True, 
-                            visualize_ncols: int = 5, 
-                            visualize_savepath: str = './tiles',
+                            loc=None,
+                            j2000=None,
+                            ra=None, 
+                            dec=None, 
+                            aperture= 0,
                             match_tolerance_minutes = 4,
-                            fraction_overlap_lower = 0.2):
+                            fraction_overlap_lower = 0.2,
+                            visualize=False,
+                            **kwargs):
         """
         Find the tiles that overlap with the given coordinates and aperture sizes.
 
@@ -45,43 +59,25 @@ class Tiles:
         Returns:
         - A table containing the overlapping or innermost tiles for each coordinate.
         """
-        
-        if list_j2000:
-            list_ra, list_dec = [], []
-            for jstr in list_j2000:
-                if not jstr.startswith('J'):
-                    raise ValueError(f"Invalid J2000 coordinate (missing J): {jstr}")
-                raw = jstr[1:]
-                for sign in ['+', '-']:
-                    if sign in raw[6:]:
-                        split_index = raw.find(sign, 6)
-                        break
-                else:
-                    raise ValueError(f"Cannot parse RA/Dec from {jstr}")
+        if loc is not None:
+            loc = np.atleast_2d(loc)
+            ra, dec = loc.T
 
-                ra_raw = raw[:split_index]
-                dec_raw = raw[split_index:]
+        if j2000 is not None:
+            list_j2000 = np.atleast_1d(j2000)
+            coords = [parse_coordinates(j2000) for j2000 in list_j2000]
+            ra, dec = zip(*coords)
 
-                # Ensure strings are padded correctly
-                ra_raw = ra_raw.ljust(9, '0')
-                dec_raw = dec_raw.ljust(9, '0')
-
-                # Convert to sexagesimal format
-                ra_sex = f"{ra_raw[:2]}h{ra_raw[2:4]}m{ra_raw[4:]}s"
-                dec_sex = f"{dec_raw[:3]}d{dec_raw[3:5]}m{dec_raw[5:]}s"
-
-                coord = SkyCoord(f"{ra_sex} {dec_sex}", frame='icrs')
-                list_ra.append(coord.ra.deg)
-                list_dec.append(coord.dec.deg)
-        if list_ra is None or list_dec is None:
-            raise ValueError("(list_ra, list_dec) or list_j2000 must be provided.")
+        list_ra = np.atleast_1d(ra)
+        list_dec = np.atleast_1d(dec)
         
         # Ensure list_aperture matches list_ra and list_dec
-        if isinstance(list_aperture, (int, float)):
-            list_aperture = [list_aperture] * len(list_ra)
-        elif len(list_aperture) != len(list_ra):
+        if isinstance(aperture, (int, float)):
+            list_aperture = [aperture] * len(list_ra)
+        elif len(aperture) != len(list_ra):
             raise ValueError("list_aperture must have the same length as list_ra and list_dec.")
-
+        else:
+            list_aperture = np.atleast_1d(aperture)
         # Load the tile data
         if not self.tbl_RIS:
             self.tbl_RIS = ascii.read(self.tile_path)
@@ -120,36 +116,13 @@ class Tiles:
         if not list_matched_tiles:
             return Table(), list_matched_coords, None
 
-        fig_path = None
-        
-        if visualize:
-            visual_ra = []
-            visual_dec = []
-            visual_aperture = []
-            visual_matched_coords = []
-            visual_matched_tiles = []
-
-            for idx, matched_coord in enumerate(list_matched_coords):
-                visual_ra.append(list_ra[matched_coord])
-                visual_dec.append(list_dec[matched_coord])
-                visual_aperture.append(list_aperture[matched_coord])
-                visual_matched_coords.append(idx)
-                visual_matched_tiles.append(list_matched_tiles[idx])
-
-            fig_path = self.visualize_tiles(
-                visual_ra, visual_dec, visual_aperture, 
-                visual_matched_coords, visual_matched_tiles,
-                visualize_ncols, visualize_savepath,
-                list_j2000=list_j2000
-            )
-            
-        if list_j2000:
+        if len(list_matched_tiles)!=len(list_ra):
             matched_set = set(list_matched_coords)
-            all_indices = set(range(len(list_j2000)))
+            all_indices = set(range(len(list_ra)))
             unmatched_indices = sorted(all_indices - matched_set)
             if unmatched_indices:
-                unmatched_j2000 = [list_j2000[i] for i in unmatched_indices]
-                print("No match:", ", ".join(unmatched_j2000))
+                unmatched_ra, unmatched_dec = [list_ra[i] for i in unmatched_indices], [list_dec[i] for i in unmatched_indices]
+                print("No match:", ", ".join([f"{ra:.3f} {dec:.3f}" for ra, dec in zip(unmatched_ra, unmatched_dec)]))  
 
         matched_tbl = Table()
         for matched_coord, matched_tiles, distance_to_boundaries, overlapped_areas in zip(list_matched_coords, list_matched_tiles, list_distance_to_boundary, list_overlapped_areas):
@@ -162,8 +135,162 @@ class Tiles:
         
         _, unique_indices = np.unique(matched_tbl['id'], return_index=True)
         unique_table = matched_tbl[sorted(unique_indices)]
+        self._tile_table = unique_table
+
+        target_tbl = Table()
+        for i, (ra, dec) in enumerate(zip(list_ra, list_dec)):
+            target_tbl_single = Table()
+            target_tbl_single['ra'] = [ra]
+            target_tbl_single['dec'] = [dec]
+            hhmmss, ddmmss = parse_coordinates([ra,dec], output_format='hmsdms')
+            target_tbl_single['hhmmss'] = hhmmss
+            target_tbl_single['ddmmss'] = ddmmss
+            j2000 = parse_coordinates([ra,dec], output_format='j2000')
+            target_tbl_single['j2000'] = j2000
+            target_tbl_single['aperture'] = [list_aperture[i]]
+            target_tbl_single['matched_idx'] = [i]
+            target_tbl_single['matched_tile'] = list_matched_tiles[i]
+            target_tbl = vstack([target_tbl, target_tbl_single])
+
+        self._target_table = target_tbl
         
-        return unique_table, list_matched_coords, fig_path
+        fig_path = None
+        
+        if visualize:
+            fig_path = self.visualize_tiles(
+                **kwargs
+            )
+
+        return fig_path
+
+    def visualize_tiles(self, 
+                        visualize_ncols: int = 5, 
+                        visualize_savepath: Union[str, bool] = False,
+                        **kwargs):
+        """
+        Visualize the tiles and matched coordinates with aperture regions.
+        Uses the target_table and tile_table properties directly.
+        
+        Parameters:
+        - visualize_ncols (int): Number of columns in the visualization grid
+        - visualize_savepath (str or bool): Path to save the visualization or False to not save
+        
+        Returns:
+        - Path to the saved figure, or None if not saved
+        """
+        if not hasattr(self, '_target_table') or not hasattr(self, '_tile_table'):
+            print("Target table or tile table not produced. Run find_overlapping_tiles first.")
+            return None
+        
+        # Get unique matched indices
+        unique_indices = np.unique(self.target_table['matched_idx'])
+        n_coords = len(unique_indices)
+        
+        cols = visualize_ncols
+        rows = (n_coords + cols - 1) // cols
+
+        fig, axes = plt.subplots(rows, cols, figsize=(15, rows * 3), subplot_kw={'aspect': 'equal'})
+        if rows == 1 and cols == 1:
+            axes = [axes]
+        elif isinstance(axes, np.ndarray):
+            axes = axes.flatten()
+
+        unmatched_j2000 = []
+        
+        for i, idx in enumerate(unique_indices):
+            # Get target data
+            target_row = self.target_table[self.target_table['matched_idx'] == idx][0]
+            ra = target_row['ra']
+            dec = target_row['dec']
+            aperture = target_row['aperture']
+            j2000 = target_row['j2000']
+            
+            # Get matched tile IDs for this target
+            matched_tile_rows = self.tile_table[self.tile_table['matched_idx'] == idx]
+            matched_tile_ids = matched_tile_rows['id']
+            
+            ax = axes[i]
+            coord_targets = SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg))
+
+            # Format J2000 string
+            ra_sex = coord_targets.ra.to_string(unit=u.hour, sep='', precision=2, pad=True)
+            dec_sex = coord_targets.dec.to_string(unit=u.deg, sep='', alwayssign=True, precision=2, pad=True)
+            j2000_string = j2000 if j2000 else f"J{ra_sex}{dec_sex}"
+
+            if len(matched_tile_ids) == 0:
+                ax.scatter(ra, dec, color='gray', marker='x', s=60)
+                ax.text(ra, dec, 'NO TILE', fontsize=8, ha='center', va='center', color='red',
+                        bbox=dict(facecolor='white', alpha=0.5, edgecolor='none'))
+                ax.set_xlim(ra - 2, ra + 2)
+                ax.set_ylim(dec - 2, dec + 2)
+                if j2000:
+                    unmatched_j2000.append(j2000_string)
+                ax.set_title(f'Target {i + 1}: ({ra:.2f}, {dec:.2f})\n{j2000_string}')
+                continue
+            
+            nearby_tiles_idx = coord_targets.separation(self.coords_RIS) < (aperture + 3) * u.deg
+            nearby_polygons_by_id = self._create_polygons(self.tbl_RIS[nearby_tiles_idx])
+
+            # Plot surrounding polygons in blue
+            for tile_id, polygons in nearby_polygons_by_id.items():
+                for poly in polygons:
+                    x, y = poly.exterior.xy
+                    ax.plot(x, y, color='blue', lw=1)
+                    ax.fill(x, y, color='blue', alpha=0.3)
+
+            # Plot matched polygons in red
+            for tile_id in matched_tile_ids:
+                if tile_id in nearby_polygons_by_id:
+                    for poly in nearby_polygons_by_id[tile_id]:
+                        x, y = poly.exterior.xy
+                        ax.plot(x, y, color='red', lw=2)
+
+            # Draw the aperture if applicable
+            if aperture > 0:
+                aperture_circle = plt.Circle((ra, dec), aperture, color='red', fill=True, linestyle='--', label='Aperture', lw=3, alpha=0.2)
+                ax.add_patch(aperture_circle)
+                ax.text(ra, dec, f'N_tiles ={len(matched_tile_ids)}', fontsize=8, ha='center', va='center', color='black',
+                        bbox=dict(facecolor='white', alpha=0.6, edgecolor='none'))
+                ax.set_xlim(ra - 1.2 * aperture, ra + 1.2 * aperture)
+                ax.set_ylim(dec - 1.2 * aperture, dec + 1.2 * aperture)
+            else:
+                ax.scatter(ra, dec, color='green', marker='o', s=50, label='Target Point' if i == 0 else None)
+                ax.set_xlim(ra - 2, ra + 2)
+                ax.set_ylim(dec - 2, dec + 2)
+                if len(matched_tile_ids) > 0:
+                    first_tile_id = matched_tile_ids[0]
+                    if first_tile_id in nearby_polygons_by_id:
+                        innermost_poly = nearby_polygons_by_id[first_tile_id][0]
+                        x, y = innermost_poly.exterior.xy
+                        ax.plot(x, y, color='red', lw=2)
+                        ax.text(ra, dec - 0.3, first_tile_id, fontsize=8, ha='center', va='center', color='black',
+                                bbox=dict(facecolor='white', alpha=0.6, edgecolor='none'))
+            ax.set_title(f'Target {i + 1}: ({ra:.2f}, {dec:.2f})\n{j2000_string}')
+
+        # Add a legend to the first subplot
+        if n_coords > 0:
+            axes[0].legend(loc='upper left', fontsize=8)
+        
+        # Add unmatched J2000 coords
+        if unmatched_j2000:
+            unmatched_label = "No match: " + ", ".join(unmatched_j2000)
+            fig.text(0.5, 0.02, unmatched_label, ha='center', va='top', fontsize=10, color='red')
+            fig.subplots_adjust(bottom=0.15)
+
+        # Remove unused subplots
+        for j in range(n_coords, len(axes)):
+            fig.delaxes(axes[j])
+
+        plt.tight_layout()
+        fig_path = None
+        if visualize_savepath:
+            os.makedirs(visualize_savepath, exist_ok=True)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            fig_path = f"{os.path.join(visualize_savepath, f'matched_tiles_{timestamp}')}.png"
+            plt.savefig(fig_path)
+        
+        plt.show()
+        return fig_path
 
     def _find_innermost_tile(self, polygons_by_id, target_point):
         """
@@ -198,102 +325,6 @@ class Tiles:
                         overlapped_area.append(fraction_overlap)
                     break  # Avoid duplicate entries for the same tile_id
         return overlapped_tiles, overlapped_area
-
-    def visualize_tiles(self, list_ra, list_dec, list_aperture, list_matched_coords, list_matched_tiles, visualize_ncols, visualize_savepath, list_j2000=None):
-        """
-        Visualize the tiles and matched coordinates with aperture regions.
-        """
-        list_ra = [list_ra[i] for i in list_matched_coords]
-        list_dec = [list_dec[i] for i in list_matched_coords]
-        list_aperture = [list_aperture[i] for i in list_matched_coords]
-        list_matched_tiles = [list_matched_tiles[i] for i in list_matched_coords]
-
-        n_coords = len(list_ra)
-        cols = visualize_ncols
-        rows = (n_coords + cols - 1) // cols
-
-        fig, axes = plt.subplots(rows, cols, figsize=(15, rows * 3), subplot_kw={'aspect': 'equal'})
-        if rows == 1 and cols == 1:
-            axes = [axes]
-        elif isinstance(axes, np.ndarray):
-            axes = axes.flatten()
-
-        unmatched_j2000 = []
-        for i, (ra, dec, matched_tile_id, aperture) in enumerate(zip(list_ra, list_dec, list_matched_tiles, list_aperture)):
-            ax = axes[i]
-            coord_targets = SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg))
-
-            # Format J2000 string
-            ra_sex = coord_targets.ra.to_string(unit=u.hour, sep='', precision=2, pad=True)
-            dec_sex = coord_targets.dec.to_string(unit=u.deg, sep='', alwayssign=True, precision=2, pad=True)
-            j2000_string = f"J{ra_sex}{dec_sex}"
-
-            if not matched_tile_id:
-                ax.scatter(ra, dec, color='gray', marker='x', s=60)
-                ax.text(ra, dec, 'NO TILE', fontsize=8, ha='center', va='center', color='red',
-                        bbox=dict(facecolor='white', alpha=0.5, edgecolor='none'))
-                ax.set_xlim(ra - 2, ra + 2)
-                ax.set_ylim(dec - 2, dec + 2)
-                unmatched_j2000.append(j2000_string)
-                ax.set_title(f'Target {i + 1}: ({ra:.2f}, {dec:.2f})\n{j2000_string}')
-                continue
-            
-            nearby_tiles_idx = coord_targets.separation(self.coords_RIS) < (aperture + 3) * u.deg
-            nearby_polygons_by_id = self._create_polygons(self.tbl_RIS[nearby_tiles_idx])
-
-            # Plot surrounding polygons in blue
-            for tile_id, polygons in nearby_polygons_by_id.items():
-                for poly in polygons:
-                    x, y = poly.exterior.xy
-                    ax.plot(x, y, color='blue', lw=1)
-                    ax.fill(x, y, color='blue', alpha=0.3)
-
-            for tile_id in matched_tile_id:
-                for poly in nearby_polygons_by_id[tile_id]:
-                    x, y = poly.exterior.xy
-                    ax.plot(x, y, color='red', lw=2)
-
-            # Draw the aperture if applicable
-            if aperture > 0:
-                aperture_circle = plt.Circle((ra, dec), aperture, color='red', fill=True, linestyle='--', label='Aperture', lw=3, alpha=0.2)
-                ax.add_patch(aperture_circle)
-                ax.text(ra, dec, rf'N_tiles ={len(matched_tile_id)}', fontsize=8, ha='center', va='center', color='black',
-                        bbox=dict(facecolor='white', alpha=0.6, edgecolor='none'))
-                ax.set_xlim(ra - 1.2 * aperture, ra + 1.2 * aperture)
-                ax.set_ylim(dec - 1.2 * aperture, dec + 1.2 * aperture)
-            else:
-                ax.scatter(ra, dec, color='green', marker='o', s=50, label='Target Point' if i == 0 else None)
-                ax.set_xlim(ra - 2, ra + 2)
-                ax.set_ylim(dec - 2, dec + 2)
-                innermost_poly = nearby_polygons_by_id[matched_tile_id[0]][0]
-                x, y = innermost_poly.exterior.xy
-                ax.plot(x, y, color='red', lw=2)
-                ax.text(ra, dec - 0.3, matched_tile_id[0], fontsize=8, ha='center', va='center', color='black',
-                        bbox=dict(facecolor='white', alpha=0.6, edgecolor='none'))
-            ax.set_title(f'Target {i + 1}: ({ra:.2f}, {dec:.2f})\n{j2000_string}')
-
-        # Add a legend to the first subplot
-        axes[0].legend(loc='upper left', fontsize=8)
-        
-        # Add unmatched J2000 coords
-        if unmatched_j2000:
-            unmatched_label = "No match: " + ", ".join(unmatched_j2000)
-            fig.text(0.5, 0.02, unmatched_label, ha='center', va='top', fontsize=10, color='red')
-            fig.subplots_adjust(bottom=0.15)
-
-        # Remove unused subplots
-        for j in range(len(list_ra), len(axes)):
-            fig.delaxes(axes[j])
-
-        plt.tight_layout()
-        if visualize_savepath:
-            os.makedirs(visualize_savepath, exist_ok=True)
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            fig_path = f"{os.path.join(visualize_savepath, f'matched_tiles_{timestamp}')}.png"
-            plt.savefig(fig_path)
-        plt.show()
-        return fig_path
-    
 
     def _split_wrapping_polygon(self, polygon):
         """
