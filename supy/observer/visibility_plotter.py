@@ -29,13 +29,27 @@ class VisibilityPlotter:
         Args:
             logger: Logger instance from main application
         """
-        self.observer = mainObserver()  # Use default parameters
+        # Use the provided logger or create a minimal one
+        if logger:
+            self.logger = logger
+        else:
+            # Create minimal logger if none provided
+            self.logger = logging.getLogger('visibility_plotter')
+            if not self.logger.handlers:
+                handler = logging.StreamHandler()
+                self.logger.addHandler(handler)
+            
+        self.logger.info("Initializing VisibilityPlotter")
+        
+        # Initialize observer with default parameters
+        self.observer = mainObserver()
         self.staralt = Staralt(self.observer)
-        self.logger = logger if logger else test_logger
         
         # Define timezones
         self.chile_tz = pytz.timezone("America/Santiago")
         self.korea_tz = pytz.timezone("Asia/Seoul")
+        
+        self.logger.info("VisibilityPlotter initialized successfully")
     
     def _convert_time_to_clt_kst(self, utc_time: datetime) -> Tuple[datetime, datetime]:
         """
@@ -57,22 +71,42 @@ class VisibilityPlotter:
         
         return chile_time, korea_time
     
-    def _format_time_clt_kst(self, utc_time: Optional[datetime]) -> str:
+    def _format_time_clt_kst(self, utc_time: Optional[Union[datetime, str]]) -> str:
         """
         Format time in both CLT and KST timezones.
         
         Args:
-            utc_time: Datetime in UTC, or None
+            utc_time: Datetime in UTC, string, or other format
             
         Returns:
             String with formatted time in both timezones, or "Unknown" if utc_time is None
         """
         if utc_time is None:
             return "Unknown"
+        
+        try:
+            # If it's a numpy string, convert to regular string
+            if hasattr(utc_time, 'dtype') and 'str' in str(utc_time.dtype):
+                utc_time = str(utc_time)
+                
+            # If it's a string, convert to datetime
+            if isinstance(utc_time, str):
+                utc_time = datetime.fromisoformat(utc_time)
+                
+            # Ensure UTC timezone is set
+            if utc_time.tzinfo is None:
+                utc_time = pytz.utc.localize(utc_time)
+                
+            # Convert to Chile and Korea times
+            chile_time = utc_time.astimezone(self.chile_tz)
+            korea_time = utc_time.astimezone(self.korea_tz)
             
-        chile_time, korea_time = self._convert_time_to_clt_kst(utc_time)
-        return f"{chile_time.strftime('%H:%M')} CLT / {korea_time.strftime('%H:%M')} KST"
-    
+            return f"{chile_time.strftime('%H:%M')} CLT / {korea_time.strftime('%H:%M')} KST"
+        
+        except Exception as e:
+            self.logger.warning(f"Error formatting time: {e}")
+            return "Unknown"
+        
     def _analyze_visibility(self, staralt_data_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
         Analyze visibility data for a target to determine if it's observable.
@@ -118,38 +152,71 @@ class VisibilityPlotter:
             # Find observable periods (sequences of 'g' in color_target)
             observable_indices = [i for i, color in enumerate(color_target) if color == 'g']
             
+            # Get maximum altitude and minimum moon separation for today
+            max_alt = max(target_alts) if target_alts else 0
+            min_moonsep = min(target_moonsep) if target_moonsep else 0
+            
             if not observable_indices:
                 # Target is not observable tonight
-                # Determine reason why it's not observable
+                # Now properly check if it's observable tomorrow
                 
-                # Get maximum altitude during the night
-                max_alt = max(target_alts) if target_alts else 0
-                min_moonsep = min(target_moonsep) if target_moonsep else 0
+                # Use Staralt to check if the target is observable tomorrow
+                tomorrow_observable = False
+                tomorrow_start_time = None
+                tomorrow_end_time = None
+                tomorrow_window_hours = 0
                 
-                # Determine if the target might be observable tomorrow
-                might_be_observable_tomorrow = False
-                
-                # Check if the target almost meets altitude requirements
-                # If it's close to the minimum altitude but not quite there
-                if 0 < max_alt < min_altitude and max_alt > min_altitude - 15:
-                    might_be_observable_tomorrow = True
+                # Directly check tomorrow's observability using the Staralt object
+                try:
+                    # Create a copy to avoid affecting the original object's state
+                    tomorrow_check = Staralt(self.observer)
                     
-                # Check if moon separation is the issue and moon will move
-                if max_alt >= min_altitude and min_moonsep < min_moon_sep and min_moonsep > min_moon_sep - 20:
-                    might_be_observable_tomorrow = True
+                    # Set to tomorrow and run visibility calculation
+                    tomorrow_date = now_datetime + timedelta(days=1)
+                    tomorrow_check.set_target(
+                        ra=self.staralt.target_coord.ra.deg,
+                        dec=self.staralt.target_coord.dec.deg,
+                        utctime=tomorrow_date,
+                        target_minalt=min_altitude,
+                        target_minmoonsep=min_moon_sep
+                    )
+                    
+                    # Check if observable tomorrow
+                    if tomorrow_check.is_observable:
+                        tomorrow_observable = True
+                        if tomorrow_check.min_max_obstime:
+                            tomorrow_start_time, tomorrow_end_time = tomorrow_check.min_max_obstime
+                            tomorrow_window_hours = (tomorrow_end_time - tomorrow_start_time).total_seconds() / 3600
+                except Exception as e:
+                    self.logger.error(f"Error checking tomorrow's observability: {e}")
                 
-                if might_be_observable_tomorrow:
+                if tomorrow_observable:
+                    # Target is observable tomorrow
                     result["status"] = "observable_tomorrow"
-                    result["condition"] = "Likely Observable Tomorrow"
+                    result["condition"] = "Observable Tomorrow Night"
                     
-                    if max_alt < min_altitude:
-                        result["reason"] = f"Target reaches {max_alt:.1f}° (close to minimum {min_altitude}°), may be higher tomorrow"
-                    elif min_moonsep < min_moon_sep:
-                        result["reason"] = f"Target too close to Moon (min separation: {min_moonsep:.1f}°), moon position will change tomorrow"
-                    
-                    result["recommendation"] = "Check visibility for tomorrow night"
+                    if tomorrow_start_time and tomorrow_end_time:
+                        result["observable_start"] = tomorrow_start_time
+                        result["observable_end"] = tomorrow_end_time
+                        result["observable_hours"] = round(tomorrow_window_hours, 1)
+                        
+                        # Calculate hours until observable
+                        hours_until = (tomorrow_start_time - now_datetime).total_seconds() / 3600
+                        result["hours_until_observable"] = round(hours_until, 1)
+                        
+                        best_time = tomorrow_start_time + timedelta(hours=tomorrow_window_hours/2)
+                        result["best_time"] = best_time
+                        
+                        result["message"] = (
+                            f"Target will be observable tomorrow for {result['observable_hours']} hours, "
+                            f"starting in {result['hours_until_observable']} hours."
+                        )
+                        result["recommendation"] = "Schedule observation for tomorrow night"
+                    else:
+                        # Fallback if we can't determine exact times
+                        result["reason"] = "Observable tomorrow, but exact times unknown"
                 else:
-                    # Regular not observable status
+                    # Target is not observable today or tomorrow
                     if max_alt < min_altitude:
                         if max_alt <= 0:
                             result["condition"] = "Never Rises"
@@ -165,6 +232,7 @@ class VisibilityPlotter:
                 
                 return result
             
+            # Target is observable today - continue with current logic
             # Get start and end of observable period
             start_idx = observable_indices[0]
             end_idx = observable_indices[-1]
@@ -186,7 +254,7 @@ class VisibilityPlotter:
             
             # Find the closest time index to now
             now_idx = min(range(len(target_times_dt)), 
-                          key=lambda i: abs((target_times_dt[i] - now_datetime).total_seconds()))
+                        key=lambda i: abs((target_times_dt[i] - now_datetime).total_seconds()))
             
             # Get current altitude and moon separation
             result["current_altitude"] = target_alts[now_idx]
@@ -251,19 +319,16 @@ class VisibilityPlotter:
                     result["recommendation"] = f"Schedule observations to begin at {self._format_time_clt_kst(result['observable_start'])}"
                 else:
                     # Target was observable earlier but not anymore
-
                     if now_datetime > end_time:
                         result["status"] = "not_observable"
                         result["condition"] = "Observation Window Passed"
-                        result["reason"] = f"The astronomcal dawn has passed"
+                        result["reason"] = f"The astronomical dawn has passed"
                         result["recommendation"] = "Observation no longer possible tonight"
-
                     else:
-                        # if result["current_altitude"] < min_altitude:
-                            result["status"] = "not_observable"
-                            result["condition"] = "Observation Window Passed"
-                            result["reason"] = f"Target was observable earlier but has now set below the {min_altitude}° altitude limit"
-                            result["recommendation"] = "Observation no longer possible tonight"
+                        result["status"] = "not_observable"
+                        result["condition"] = "Observation Window Passed"
+                        result["reason"] = f"Target was observable earlier but has now set below the {min_altitude}° altitude limit"
+                        result["recommendation"] = "Observation no longer possible tonight"
             
             return result
             
@@ -271,15 +336,26 @@ class VisibilityPlotter:
             self.logger.error(f"Error analyzing visibility data: {e}", exc_info=True)
             result["reason"] = f"Error in visibility analysis: {str(e)}"
             return result
-    
     def format_visibility_message(self, visibility_info: Dict[str, Any]) -> str:
         """
         Format visibility information into a structured message for Slack.
+        
+        Args:
+            visibility_info: Dictionary containing visibility analysis results
+            
+        Returns:
+            Formatted message string for Slack display
         """
         try:
+            # Log start of message formatting
+            self.logger.info("Formatting visibility message")
+            
             # Extract basic info
             status = visibility_info.get("status", "unknown")
             condition = visibility_info.get("condition", "Unknown")
+            
+            # Log the status and condition
+            self.logger.info(f"Visibility status: {status}, condition: {condition}")
             
             # Start building message
             sections = []
@@ -288,19 +364,15 @@ class VisibilityPlotter:
             if status == "observable_now":
                 header = "*🟢 CURRENTLY OBSERVABLE*"
                 sections.append(f"{header}")
-                # sections.append(f"{header}\n➡ *Immediate Observation POSSIBLE*")
             elif status == "observable_later":
                 header = "*🟠 OBSERVABLE LATER TONIGHT*"
                 sections.append(f"{header}")
-                # sections.append(f"{header}\n➡ *DELAYED Observation Required*")
             elif status == "observable_tomorrow":
                 header = "*🔵 LIKELY OBSERVABLE TOMORROW*"
                 sections.append(f"{header}")
-                # sections.append(f"{header}\n➡ *TOMORROW Observation Recommended*")
             else:
                 header = "*🔴 NOT OBSERVABLE*"
                 sections.append(f"{header}")
-                # sections.append(f"{header}\n➡ *Observation NOT POSSIBLE from CHILE*")
             
             # Add condition
             if condition != "Unknown":
@@ -324,6 +396,9 @@ class VisibilityPlotter:
                 ]
                 sections.extend(details)
                 
+                # Log formatted message for observable_now status
+                self.logger.info(f"Formatting 'observable_now' message: Observable until {end_time} ({remaining:.1f} hours remaining)")
+                
             elif status == "observable_later":
                 # Observable later details
                 # Safely get time objects with fallbacks
@@ -345,51 +420,83 @@ class VisibilityPlotter:
                     f"> - ⭐ *Best observation time*: {best_time} (highest altitude)"
                 ]
                 sections.extend(details)
+                
+                # Log formatted message for observable_later status
+                self.logger.info(f"Formatting 'observable_later' message: Observable in {hours_until:.1f} hours (window: {start_time} to {end_time})")
+                
             elif status == "observable_tomorrow":
                 # Enhanced tomorrow observability details
                 reason = visibility_info.get("reason", "Target may be observable tomorrow")
                 
-                # Calculate tomorrow's timing information using existing data
-                # Get the dawn/dusk times from today and add 24 hours
-                now = datetime.now()
+                # Get tomorrow's date for reference
+                tomorrow_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+                if "tomorrow_date" in visibility_info:
+                    tomorrow_date = visibility_info["tomorrow_date"]
+                    
+                # Get hours until observable - use the value from visibility info if available
+                hours_until_tomorrow = visibility_info.get("hours_until_observable", 24)
+                self.logger.info(f"Hours until tomorrow's observation: {hours_until_tomorrow:.1f}")
                 
-                # Get approximate observation window tomorrow
-                tomorrow_start_time = now + timedelta(hours=24)
-                tomorrow_start_formatted = self._format_time_clt_kst(tomorrow_start_time)
-                
-                # Estimate window duration based on current max altitude (higher = longer window)
-                max_alt = visibility_info.get("max_altitude", 45)  # Default to 45 degrees
-                est_duration = 0
-                
-                if max_alt < 30:
-                    est_duration = 1.5  # Very short window
-                elif max_alt < 45:
-                    est_duration = 3.0  # Medium window
+                # Check if we have precise data about tomorrow's observation window
+                if visibility_info.get("observable_start") and visibility_info.get("observable_end"):
+                    # Format the start and end times
+                    start_time = self._format_time_clt_kst(visibility_info["observable_start"])
+                    end_time = self._format_time_clt_kst(visibility_info["observable_end"])
+                    window_hours = visibility_info.get("observable_hours", 0)
+                    
+                    details = [
+                        f"> - 📆 *Tomorrow's observability ({tomorrow_date})*: {reason}",
+                        f"> - 🕙 *Expected observable window*: {start_time} to {end_time} (*{window_hours:.1f} hours*)",
+                        f"> - ⏳ *Hours until observable*: ~{hours_until_tomorrow:.1f} hours from now"
+                    ]
+                    sections.extend(details)
+                    
+                    self.logger.info(f"Using precise tomorrow data: {start_time} to {end_time} ({window_hours:.1f} hours)")
                 else:
-                    est_duration = 4.5  # Long window
+                    # Fall back to estimated times
+                    # Get approximate observation window tomorrow based on today's data
+                    now = datetime.now()
+                    tomorrow_night = now.replace(hour=20, minute=0, second=0) + timedelta(days=1)
+                    tomorrow_night_end = tomorrow_night.replace(hour=5, minute=0, second=0) + timedelta(days=1)
+                    
+                    # Format the times
+                    tomorrow_start_formatted = self._format_time_clt_kst(tomorrow_night)
+                    tomorrow_end_formatted = self._format_time_clt_kst(tomorrow_night_end)
+                    
+                    # Estimate duration based on the reason for not being observable today
+                    max_alt = visibility_info.get("max_altitude", 45)
+                    est_duration = 4.0  # Default duration
+                    
+                    if "max_altitude" in visibility_info:
+                        max_alt = visibility_info["max_altitude"]
+                        if max_alt < 30:
+                            est_duration = 2.0  # Short window
+                        elif max_alt < 45:
+                            est_duration = 3.0  # Medium window
+                        else:
+                            est_duration = 4.5  # Long window
+                    
+                    details = [
+                        f"> - 📆 *Tomorrow's observability ({tomorrow_date})*: {reason}",
+                        f"> - 🕙 *Estimated tomorrow window*: {tomorrow_start_formatted} to {tomorrow_end_formatted} (*~{est_duration:.1f} hours*)",
+                        f"> - ⏳ *Hours until observable*: ~{hours_until_tomorrow:.1f} hours from now"
+                    ]
+                    sections.extend(details)
+                    
+                    self.logger.info(f"Using estimated tomorrow data: ~{est_duration:.1f} hours, in ~{hours_until_tomorrow:.1f} hours")
                 
-                # Calculate approximate end time
-                tomorrow_end_time = tomorrow_start_time + timedelta(hours=est_duration)
-                tomorrow_end_formatted = self._format_time_clt_kst(tomorrow_end_time)
-                
-                # Calculate hours until tomorrow's observation
-                hours_until_tomorrow = 24 + visibility_info.get("hours_until_observable", 0)
-                if hours_until_tomorrow > 24:
-                    hours_until_tomorrow = 24  # Cap at 24 hours if greater
-                
-                details = [
-                    f"> - 📆 *Future observability*: {reason}",
-                    f"> - 🕙 *Estimated tomorrow window*: {tomorrow_start_formatted} to {tomorrow_end_formatted} (*~{est_duration:.1f} hours*)",
-                    f"> - ⏳ *Hours until observable*: ~{hours_until_tomorrow:.1f} hours from now"
-                ]
-                sections.extend(details)
             else:
                 # Not observable details
                 reason = visibility_info.get("reason", "Unknown limitation")
                 sections.append(f"> - ❌ *Reason*: {reason}")
+                
+                # Log formatted message for not_observable status
+                self.logger.info(f"Formatting 'not_observable' message: Reason - {reason}")
             
             # Combine all sections
-            return "\n".join(sections)
+            formatted_message = "\n".join(sections)
+            self.logger.info("Successfully formatted visibility message")
+            return formatted_message
             
         except Exception as e:
             self.logger.error(f"Error formatting visibility message: {e}", exc_info=True)
@@ -427,8 +534,11 @@ class VisibilityPlotter:
             if visibility_info.get("status") == "observable_tomorrow":
                 self.logger.info(f"Target likely observable tomorrow - generating tomorrow's sky plot")
                 
-                # Use a date that's 24 hours in the future
-                tomorrow = datetime.now() + timedelta(days=1)
+                # Use tomorrow's date from visibility_info if available, otherwise default to +24hrs
+                if visibility_info.get("observable_start"):
+                    tomorrow = visibility_info.get("observable_start")
+                else:
+                    tomorrow = datetime.now() + timedelta(days=1)
                 
                 # Generate visibility data for tomorrow
                 self.staralt.set_target(
@@ -440,20 +550,11 @@ class VisibilityPlotter:
                     target_minmoonsep=minmoonsep
                 )
                 
-                # Re-analyze visibility with tomorrow's data
-                tomorrow_visibility_info = self._analyze_visibility(self.staralt.staralt)
-                
-                # Add showing_tomorrow flag to tomorrow's data
+                # Add showing_tomorrow flag to visibility_info
                 visibility_info["showing_tomorrow"] = True
                 visibility_info["tomorrow_date"] = tomorrow.strftime("%Y-%m-%d")
-                
-                # Copy useful visibility data from tomorrow's analysis
-                # but keep the original "observable_tomorrow" status
-                for key in ["observable_start", "observable_end", "observable_hours", "best_time"]:
-                    if key in tomorrow_visibility_info:
-                        visibility_info[key] = tomorrow_visibility_info[key]
             
-            # If not observable, return early with no plot
+            # If not observable at all, return early with no plot
             if visibility_info.get("status") == "not_observable":
                 self.logger.info(f"Target not observable. Status: {visibility_info.get('status')}. No plot generated.")
                 return None, visibility_info

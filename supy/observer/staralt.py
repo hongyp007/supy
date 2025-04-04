@@ -73,8 +73,12 @@ class Staralt():
     
     @property
     def is_observable(self) -> bool:
-        if self.min_max_obstime is not None:
-            return True
+        """Returns True if the target is observable during the night."""
+        if not hasattr(self, 'data') or not self.data:
+            return False
+            
+        visibility = np.array(self.data.visibility)  # Boolean visibility array
+        return np.any(visibility)
 
     @property
     def min_max_obstime(self):
@@ -339,7 +343,36 @@ class Staralt():
         self.data = staraltParams(data_dict=data_dict)
         return self.data
 
-
+    def get_observable_window(self) -> Optional[Tuple[Time, Time, float]]:
+        """
+        Get the observable window for the target (start time, end time, and max altitude).
+        
+        Returns:
+            Optional[Tuple[Time, Time, float]]: A tuple of (start_time, end_time, max_altitude) 
+                                            or None if not observable
+        """
+        if not hasattr(self, 'data') or not self.data:
+            return None
+            
+        target_times = np.array(self.data.target_times)  # Time array
+        visibility = np.array(self.data.visibility)  # Boolean visibility array
+        target_alts = np.array(self.data.target_alts)  # Altitude array
+        
+        # Find indices where the target is observable
+        visible_indices = np.where(visibility)[0]
+        
+        if len(visible_indices) == 0:
+            return None  # No observable periods
+            
+        # Get the observable window
+        start_idx = visible_indices[0]
+        end_idx = visible_indices[-1]
+        
+        # Find maximum altitude during observable period
+        max_alt_idx = start_idx + np.argmax(target_alts[start_idx:end_idx+1])
+        max_altitude = target_alts[max_alt_idx]
+        
+        return (target_times[start_idx], target_times[end_idx], max_altitude)
 
     def plot_staralt(self, data: Optional[Dict[str, Any]] = None, show_current_time: bool = True) -> None:
         """
