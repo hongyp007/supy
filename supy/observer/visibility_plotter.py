@@ -90,7 +90,7 @@ class VisibilityPlotter:
     def _analyze_visibility(self, staralt_data_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
         Analyze visibility data for a target to determine if it's observable.
-        Provides detailed information for GRB observation planning with improved fallbacks.
+        Provides detailed information for GRB observation planning.
         """
         result = {
             "status": "not_observable",
@@ -107,9 +107,7 @@ class VisibilityPlotter:
         }
         
         try:
-            # Extract relevant information with fallbacks for missing data
-            ra = staralt_data_dict.get("target_ra")
-            dec = staralt_data_dict.get("target_dec")
+            # Extract relevant information from staralt_data_dict
             now_datetime = staralt_data_dict.get("now_datetime")
             color_target = staralt_data_dict.get("color_target", [])
             target_times = staralt_data_dict.get("target_times", [])
@@ -118,42 +116,18 @@ class VisibilityPlotter:
             min_altitude = staralt_data_dict.get("target_minalt", 30)
             min_moon_sep = staralt_data_dict.get("target_minmoonsep", 30)
             
-            # Detailed logging for input data validation
-            self.logger.debug(f"Analyzing visibility with min_altitude={min_altitude}°, min_moon_sep={min_moon_sep}°")
-            self.logger.debug(f"Input data: {len(target_times)} time points, {len(target_alts)} altitude points, {len(target_moonsep)} moon separation points")
-            
-            # If data is missing, provide detailed reason and return early
-            if not now_datetime:
-                self.logger.warning("Current datetime is missing in staralt data")
-                result["reason"] = "Missing current datetime information"
-                return result
-                
-            if not color_target:
-                self.logger.warning("Color target array is missing or empty")
-                result["reason"] = "Missing visibility classification data"
-                return result
-                
-            if not target_times or not target_alts or not target_moonsep:
-                missing = []
-                if not target_times: missing.append("times")
-                if not target_alts: missing.append("altitudes")
-                if not target_moonsep: missing.append("moon separations")
-                self.logger.warning(f"Missing essential data: {', '.join(missing)}")
-                result["reason"] = f"Insufficient data for visibility analysis: missing {', '.join(missing)}"
+            # If data is missing, return early
+            if not all([now_datetime, color_target, target_times, target_alts, target_moonsep]):
+                result["reason"] = "Insufficient data for visibility analysis"
                 return result
             
             # Convert target_times to datetime objects if they're strings
             target_times_dt = []
             for time_str in target_times:
-                try:
-                    if isinstance(time_str, str):
-                        target_times_dt.append(datetime.fromisoformat(time_str))
-                    else:
-                        target_times_dt.append(time_str)
-                except ValueError as e:
-                    self.logger.warning(f"Error parsing time: {time_str} - {e}")
-                    # Fallback: use current time plus index as offset
-                    target_times_dt.append(now_datetime + timedelta(minutes=len(target_times_dt)*5))
+                if isinstance(time_str, str):
+                    target_times_dt.append(datetime.fromisoformat(time_str))
+                else:
+                    target_times_dt.append(time_str)
             
             # Find observable periods (sequences of 'g' in color_target)
             observable_indices = [i for i, color in enumerate(color_target) if color == 'g']
@@ -164,36 +138,65 @@ class VisibilityPlotter:
             
             if not observable_indices:
                 # Target is not observable tonight
-                # Determine reason why it's not observable
+                # Now properly check if it's observable tomorrow
                 
-                # Get maximum altitude during the night
-                max_alt = max(target_alts) if target_alts else 0
-                min_moonsep = min(target_moonsep) if target_moonsep else 0
+                # Use Staralt to check if the target is observable tomorrow
+                tomorrow_observable = False
+                tomorrow_start_time = None
+                tomorrow_end_time = None
+                tomorrow_window_hours = 0
                 
-                # Determine if the target might be observable tomorrow
-                might_be_observable_tomorrow = False
-                
-                # Check if the target almost meets altitude requirements
-                # If it's close to the minimum altitude but not quite there
-                if 0 < max_alt < min_altitude and max_alt > min_altitude - 15:
-                    might_be_observable_tomorrow = True
+                # Directly check tomorrow's observability using the Staralt object
+                try:
+                    # Create a copy to avoid affecting the original object's state
+                    tomorrow_check = Staralt(self.observer)
                     
-                # Check if moon separation is the issue and moon will move
-                if max_alt >= min_altitude and min_moonsep < min_moon_sep and min_moonsep > min_moon_sep - 20:
-                    might_be_observable_tomorrow = True
+                    # Set to tomorrow and run visibility calculation
+                    tomorrow_date = now_datetime + timedelta(days=1)
+                    tomorrow_check.set_target(
+                        ra=self.staralt.target_coord.ra.deg,
+                        dec=self.staralt.target_coord.dec.deg,
+                        utctime=tomorrow_date,
+                        target_minalt=min_altitude,
+                        target_minmoonsep=min_moon_sep
+                    )
+                    
+                    # Check if observable tomorrow
+                    if tomorrow_check.is_observable:
+                        tomorrow_observable = True
+                        if tomorrow_check.min_max_obstime:
+                            tomorrow_start_time, tomorrow_end_time = tomorrow_check.min_max_obstime
+                            tomorrow_window_hours = (tomorrow_end_time - tomorrow_start_time).total_seconds() / 3600
+                except Exception as e:
+                    self.logger.error(f"Error checking tomorrow's observability: {e}")
                 
-                if might_be_observable_tomorrow:
+                if tomorrow_observable:
+                    # Target is observable tomorrow
                     result["status"] = "observable_tomorrow"
-                    result["condition"] = "Likely Observable Tomorrow"
+                    result["condition"] = "Observable Tomorrow Night"
                     
-                    if max_alt < min_altitude:
-                        result["reason"] = f"Target reaches {max_alt:.1f}° (close to minimum {min_altitude}°), may be higher tomorrow"
-                    elif min_moonsep < min_moon_sep:
-                        result["reason"] = f"Target too close to Moon (min separation: {min_moonsep:.1f}°), moon position will change tomorrow"
-                    
-                    result["recommendation"] = "Check visibility for tomorrow night"
+                    if tomorrow_start_time and tomorrow_end_time:
+                        result["observable_start"] = tomorrow_start_time
+                        result["observable_end"] = tomorrow_end_time
+                        result["observable_hours"] = round(tomorrow_window_hours, 1)
+                        
+                        # Calculate hours until observable
+                        hours_until = (tomorrow_start_time - now_datetime).total_seconds() / 3600
+                        result["hours_until_observable"] = round(hours_until, 1)
+                        
+                        best_time = tomorrow_start_time + timedelta(hours=tomorrow_window_hours/2)
+                        result["best_time"] = best_time
+                        
+                        result["message"] = (
+                            f"Target will be observable tomorrow for {result['observable_hours']} hours, "
+                            f"starting in {result['hours_until_observable']} hours."
+                        )
+                        result["recommendation"] = "Schedule observation for tomorrow night"
+                    else:
+                        # Fallback if we can't determine exact times
+                        result["reason"] = "Observable tomorrow, but exact times unknown"
                 else:
-                    # Regular not observable status
+                    # Target is not observable today or tomorrow
                     if max_alt < min_altitude:
                         if max_alt <= 0:
                             result["condition"] = "Never Rises"
@@ -203,15 +206,13 @@ class VisibilityPlotter:
                             result["reason"] = f"Target maximum altitude ({max_alt:.1f}°) below minimum required ({min_altitude}°)"
                     elif min_moonsep < min_moon_sep:
                         result["condition"] = "Moon Interference"
-                        result["reason"] = f"Target too close to {phase_desc} moon (minimum separation: {min_moonsep_val:.1f}°, required: {adjusted_min_moonsep:.1f}°)"
-                    else:
-                        result["condition"] = "Unknown Limitation"
+                        result["reason"] = f"Target too close to Moon (min separation: {min_moonsep:.1f}°, required: {min_moon_sep}°)"
                     
-                    result["recommendation"] = "Observation not possible from this location"
-                    self.logger.info(f"Target not observable: {result['reason']}")
+                    result["recommendation"] = "Observation not possible from Chile"
                 
                 return result
             
+            # Target is observable today - continue with current logic
             # Get start and end of observable period
             start_idx = observable_indices[0]
             end_idx = observable_indices[-1]
@@ -219,9 +220,8 @@ class VisibilityPlotter:
             end_time = target_times_dt[end_idx]
             
             # Find time of maximum altitude during observable period
-            observable_alts = [target_alts[i] for i in observable_indices]
-            max_obs_alt_idx = observable_indices[observable_alts.index(max(observable_alts))]
-            best_time = target_times_dt[max_obs_alt_idx]
+            max_alt_idx = start_idx + target_alts[start_idx:end_idx+1].index(max(target_alts[start_idx:end_idx+1]))
+            best_time = target_times_dt[max_alt_idx]
             
             # Calculate total observable hours
             total_hours = (end_time - start_time).total_seconds() / 3600
@@ -234,7 +234,7 @@ class VisibilityPlotter:
             
             # Find the closest time index to now
             now_idx = min(range(len(target_times_dt)), 
-                          key=lambda i: abs((target_times_dt[i] - now_datetime).total_seconds()))
+                        key=lambda i: abs((target_times_dt[i] - now_datetime).total_seconds()))
             
             # Get current altitude and moon separation
             result["current_altitude"] = target_alts[now_idx]
@@ -299,27 +299,24 @@ class VisibilityPlotter:
                     result["recommendation"] = f"Schedule observations to begin at {self._format_time_clt_kst(result['observable_start'])}"
                 else:
                     # Target was observable earlier but not anymore
-
                     if now_datetime > end_time:
                         result["status"] = "not_observable"
                         result["condition"] = "Observation Window Passed"
-                        result["reason"] = f"The astronomcal dawn has passed"
+                        result["reason"] = f"The astronomical dawn has passed"
                         result["recommendation"] = "Observation no longer possible tonight"
-
                     else:
-                        # if result["current_altitude"] < min_altitude:
-                            result["status"] = "not_observable"
-                            result["condition"] = "Observation Window Passed"
-                            result["reason"] = f"Target was observable earlier but has now set below the {min_altitude}° altitude limit"
-                            result["recommendation"] = "Observation no longer possible tonight"
+                        result["status"] = "not_observable"
+                        result["condition"] = "Observation Window Passed"
+                        result["reason"] = f"Target was observable earlier but has now set below the {min_altitude}° altitude limit"
+                        result["recommendation"] = "Observation no longer possible tonight"
             
             return result
-                
+            
         except Exception as e:
             self.logger.error(f"Error analyzing visibility data: {e}", exc_info=True)
             result["reason"] = f"Error in visibility analysis: {str(e)}"
             return result
-    
+
     def format_visibility_message(self, visibility_info: Dict[str, Any]) -> str:
         """
         Format visibility information into a structured message for Slack.
@@ -496,9 +493,9 @@ class VisibilityPlotter:
             self.logger.error(f"Error formatting visibility message: {e}", exc_info=True)
             return f"*Visibility Analysis Error*\nCould not format visibility information: {str(e)}"
 
-    def create_visibility_plot(self, ra, dec, grb_name=None, test_mode=False, minalt=30, minmoonsep=30):
+    def create_visibility_plot(self, ra, dec, grb_name=None, test_mode=False, minalt=30, minmoonsep=30, savefig=True):
         """
-        Create a visibility plot for given coordinates with improved informational labels.
+        Create a visibility plot for given coordinates.
         
         Args:
             ra: Right Ascension in degrees
@@ -547,14 +544,8 @@ class VisibilityPlotter:
                 # Add showing_tomorrow flag to visibility_info
                 visibility_info["showing_tomorrow"] = True
                 visibility_info["tomorrow_date"] = tomorrow.strftime("%Y-%m-%d")
-                
-                # Copy useful visibility data from tomorrow's analysis
-                # but keep the original "observable_tomorrow" status
-                for key in ["observable_start", "observable_end", "observable_hours", "best_time"]:
-                    if key in tomorrow_visibility_info:
-                        visibility_info[key] = tomorrow_visibility_info[key]
             
-            # If not observable, return early with no plot
+            # If not observable at all, return early with no plot
             if visibility_info.get("status") == "not_observable":
                 self.logger.info(f"Target not observable. Status: {visibility_info.get('status')}. No plot generated.")
                 return None, visibility_info
@@ -584,10 +575,6 @@ class VisibilityPlotter:
             plt.figure(dpi=300, figsize=(10, 4))
             self.staralt.plot_staralt(show_current_time=show_current_time)
             
-            # Add target coordinates to plot title for reference
-            coord_text = f"RA={ra:.2f}°, Dec={dec:.2f}°"
-            plt.title(f"{plt.gca().get_title()} ({coord_text})\n", fontsize=12)
-            
             # Add a label if we're showing tomorrow's sky
             if visibility_info.get("showing_tomorrow"):
                 tomorrow_date = visibility_info.get("tomorrow_date", 
@@ -597,63 +584,14 @@ class VisibilityPlotter:
                         ha='center', va='center', fontsize=12, weight='bold',
                         bbox=dict(facecolor='yellow', alpha=0.5, boxstyle='round'))
             
-            # Add visibility status information to plot
-            status = visibility_info.get("status", "unknown")
-            condition = visibility_info.get("condition", "Unknown")
-            
-            # Create status indicator with color
-            if status == "observable_now":
-                status_color = 'green'
-                status_text = "CURRENTLY OBSERVABLE"
-            elif status == "observable_later":
-                status_color = 'orange'
-                status_text = "OBSERVABLE LATER TONIGHT"
-            elif status == "observable_tomorrow":
-                status_color = 'blue'
-                status_text = "LIKELY OBSERVABLE TOMORROW"
-            else:
-                status_color = 'red'
-                status_text = "NOT OBSERVABLE"
-            
-            # Add status banner to bottom of plot
-            plt.figtext(0.5, 0.05, f"{status_text}: {condition}", 
-                    ha='center', va='bottom', fontsize=10, weight='bold', color=status_color,
-                    bbox=dict(facecolor='white', alpha=0.7, boxstyle='round'))
-                    
-            # Add moon phase info if available
-            try:
-                moon_phase = self.observer.moon_phase()
-                phase_pct = moon_phase * 100
-                
-                # Replace emoji with text descriptions
-                if moon_phase < 0.05:
-                    moon_desc = "New Moon"
-                elif moon_phase < 0.25:
-                    moon_desc = "Crescent Moon"
-                elif moon_phase < 0.45:
-                    moon_desc = "First Quarter"
-                elif moon_phase < 0.55:
-                    moon_desc = "Full Moon"
-                elif moon_phase < 0.75:
-                    moon_desc = "Last Quarter"
-                elif moon_phase < 0.95:
-                    moon_desc = "Crescent Moon"
-                else:
-                    moon_desc = "New Moon"
-                    
-                # Use text instead of emoji
-                plt.figtext(0.92, 0.05, f"Moon: {phase_pct:.0f}% ({moon_desc})", 
-                        ha='right', va='bottom', fontsize=9)
-            except Exception as e:
-                self.logger.warning(f"Error adding moon phase info: {e}")
-            
             # Save plot
-            plt.savefig(temp_path, bbox_inches='tight')
-            plt.close()
+            if savefig:
+                plt.savefig(temp_path, bbox_inches='tight')
+                plt.close()
             
             self.logger.info(f"Successfully created visibility plot for {grb_name or 'target'}")
             return temp_path, visibility_info
-                
+            
         except Exception as e:
             self.logger.error(f"Error creating visibility plot: {e}", exc_info=True)
             return None, {"status": "error", "message": str(e)}
