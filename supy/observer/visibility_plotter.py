@@ -2,7 +2,7 @@ import os
 import tempfile
 import math
 import time
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from .mainobserver import mainObserver
 from .staralt import Staralt
 import matplotlib.pyplot as plt
@@ -71,7 +71,7 @@ class VisibilityPlotter:
         
         return chile_time, korea_time
     
-    def _format_time_clt_kst(self, utc_time: Optional[Union[datetime, str]]) -> str:
+    def _format_time_clt_kst(self, utc_time: datetime) -> str:
         """
         Format time in both CLT and KST timezones with improved readability.
         
@@ -108,7 +108,7 @@ class VisibilityPlotter:
         
         try:
             # Extract relevant information from staralt_data_dict
-            now_datetime = staralt_data_dict.get("now_datetime")
+            now_datetime = staralt_data_dict.get("now_datetime", datetime.now())
             color_target = staralt_data_dict.get("color_target", [])
             target_times = staralt_data_dict.get("target_times", [])
             target_alts = staralt_data_dict.get("target_alts", [])
@@ -304,17 +304,18 @@ class VisibilityPlotter:
                         tomorrow_staralt = Staralt(self.observer)
                         
                         # Get the coordinates from the current Staralt object
-                        ra = self.staralt.target_coord.ra.deg
-                        dec = self.staralt.target_coord.dec.deg
+                        ra = self.staralt.target_coord.ra
+                        dec = self.staralt.target_coord.dec
                         
                         # Set target for tomorrow
-                        tomorrow_staralt.set_target(
-                            ra=ra,
-                            dec=dec,
-                            utctime=tomorrow,
-                            target_minalt=min_altitude,
-                            target_minmoonsep=min_moon_sep
-                        )
+                        if ra and dec is not None:
+                            tomorrow_staralt.set_target(
+                                ra=ra,
+                                dec=dec,
+                                utctime=tomorrow,
+                                target_minalt=min_altitude,
+                                target_minmoonsep=min_moon_sep
+                            )
                         
                         # Check if observable tomorrow
                         if tomorrow_staralt.is_observable:

@@ -195,7 +195,7 @@ class Staralt():
             coord = SkyCoord(ra, dec, unit=(u.hourangle, u.deg)) # type: ignore
         elif isinstance(ra, (float, int)) and isinstance(dec, (float, int)):
             # Interpret as decimal degrees
-            coord = SkyCoord(ra * u.deg, dec * u.deg) # type: ignore
+            coord = SkyCoord(ra = ra * u.deg, dec = dec * u.deg) # type: ignore
         else:
             raise ValueError("Unsupported RA and Dec format")
         return coord
@@ -344,8 +344,8 @@ class Staralt():
             "target_minmoonsep": target_minmoonsep   
         }
         
-        self.data = staraltParams(data_dict=data_dict)
-        return self.data
+        # self.data = staraltParams(data_dict=data_dict)
+        return data_dict
 
     def get_observable_window(self) -> Optional[Tuple[Time, Time, float]]:
         """
